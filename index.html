@@ -127,6 +127,17 @@
     }
 
     .control:last-child { border-bottom: 0; padding-bottom: 0; margin-bottom: 0; }
+    .control-group-title {
+      margin: 14px 0 8px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--khingo-border);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--khingo-accent);
+      font-size: 0.86rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
     .control label {
       display: flex;
       justify-content: space-between;
@@ -322,7 +333,7 @@
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
     }
-
+ju
     .compare-card h3 {
       margin: 0 0 6px;
       font-size: 0.92rem;
@@ -407,6 +418,15 @@
           </div>
         </div>
       </div>
+      <div class="assumptions-strip">
+        <h3>Client math audit (live)</h3>
+        <div class="results">
+          <p><span>As-Is monthly formula check</span><strong id="clientAsIsMathLine">-</strong></p>
+          <p><span>With Platform monthly formula check</span><strong id="clientPlatformMathLine">-</strong></p>
+          <p><span>Recommendations monthly formula check</span><strong id="clientPlusMathLine">-</strong></p>
+          <p><span>Client consistency status</span><strong id="clientMathConsistency">-</strong></p>
+        </div>
+      </div>
 
       <div class="compare-grid">
         <article class="compare-card">
@@ -457,6 +477,7 @@
           <button id="presetExpected" class="preset-btn" type="button">Expected</button>
           <button id="presetAggressive" class="preset-btn" type="button">Aggressive</button>
         </div>
+        <div class="control-group-title">As-Is and Base Platform Inputs (recordings + recovery)</div>
 
         <div class="control">
           <label for="cohort">Total cohort size <span id="cohortVal" class="val"></span></label>
@@ -508,6 +529,8 @@
           <input id="weekdaySessions" type="range" min="0" max="4" value="2" step="0.1">
         </div>
 
+        <div class="control-group-title">Recommendations Inputs (client revenue maximization)</div>
+
         <div class="control">
           <label for="weekendSessionsPerDay">Fragmentation blended recording price uplift (%) <span id="weekendSessionsPerDayVal" class="val"></span></label>
           <input id="weekendSessionsPerDay" type="range" min="0" max="100" value="30" step="1">
@@ -558,9 +581,13 @@
         <div id="panelPlatformCore" class="tab-panel">
           <div class="results">
             <p><span>Platform take rate</span><strong id="platformCutLine">-</strong></p>
+            <p><span>Recording GMV (weekly check)</span><strong id="recordingWeeklyGrossCheck">-</strong></p>
+            <p><span>Recording GMV (4-week month check)</span><strong id="recordingMonthlyGrossCheck">-</strong></p>
+            <p><span>Equation check</span><strong id="recordingEquationLine">-</strong></p>
             <p><span>With Platform (recordings) May-Nov</span><strong id="platformCampaignRevenue">-</strong></p>
             <p><span>Avg monthly (recordings)</span><strong id="platformMonthlyRevenue">-</strong></p>
             <p><span>Daily average (recordings)</span><strong id="platformDailyRevenue">-</strong></p>
+            <p><span>Math consistency</span><strong id="mathConsistencyLine">-</strong></p>
             <p><span>Revenue basis</span><strong>Recordings only (live excluded)</strong></p>
             <p><span>Unit schedule</span><strong>9 unit-deliveries/week</strong></p>
           </div>
@@ -677,6 +704,7 @@
       const avgPoolPerUnitDay = weightedPoolSum / safeTotalWeeks;
       const asIsWeeklyGmv = avgPoolPerUnitDay * price * unitDaysPerWeek;
       const asIsMayNovNet = asIsWeeklyGmv * safeTotalWeeks;
+      const asIsMonthlyCheck = asIsWeeklyGmv * 4;
 
       const avgRecordingBuyersAsIs = avgPoolPerUnitDay * recordingShare;
       const avgLiveBuyers = avgPoolPerUnitDay - avgRecordingBuyersAsIs;
@@ -689,8 +717,11 @@
         (avgLiveBuyers * price) +
         (withPlatformRecording * price * (1 - platformCut));
       const withPlatformPlatformUnitDay = withPlatformRecording * price * platformCut;
+      const withPlatformRecordingGrossUnitDay = withPlatformRecording * price;
+      const withPlatformRecordingGrossWeek = withPlatformRecordingGrossUnitDay * unitDaysPerWeek;
       const withPlatformTutorNet = withPlatformTutorUnitDay * unitDaysPerWeek * safeTotalWeeks;
       const withPlatformPlatformRev = withPlatformPlatformUnitDay * unitDaysPerWeek * safeTotalWeeks;
+      const withPlatformTutorMonthlyCheck = withPlatformTutorUnitDay * unitDaysPerWeek * 4;
 
       const plusRecordingBase = withPlatformTotalBuyers * plusRecordingShare;
       const plusLiveBase = Math.max(withPlatformTotalBuyers - plusRecordingBase, 0);
@@ -715,6 +746,7 @@
         (premiumAddonPerUnitDay * platformCut);
       const plusTutorNet = plusTutorUnitDay * unitDaysPerWeek * safeTotalWeeks;
       const plusPlatformRev = plusPlatformUnitDay * unitDaysPerWeek * safeTotalWeeks;
+      const plusTutorMonthlyCheck = plusTutorUnitDay * unitDaysPerWeek * 4;
 
       const monthlyHoursSaved = manualHoursDaily * automationEfficiency * 30;
       const tutorGainVsAsIs = withPlatformTutorNet - asIsMayNovNet;
@@ -753,13 +785,38 @@
       $("assumptionDestroyedRate").textContent = number(wouldHavePaidPerRecordingBuyer);
       $("assumptionRecoveredRate").textContent = pct(recoveredAudienceRate);
 
+      const shownAsIsMonthly = (asIsMayNovNet / safeTotalWeeks) * 4;
+      const shownPlatformMonthly = (withPlatformTutorNet / safeTotalWeeks) * 4;
+      const shownPlusMonthly = (plusTutorNet / safeTotalWeeks) * 4;
+      const asIsDelta = Math.abs(asIsMonthlyCheck - shownAsIsMonthly);
+      const platformDelta = Math.abs(withPlatformTutorMonthlyCheck - shownPlatformMonthly);
+      const plusDelta = Math.abs(plusTutorMonthlyCheck - shownPlusMonthly);
+      const totalClientDelta = asIsDelta + platformDelta + plusDelta;
+
+      $("clientAsIsMathLine").textContent =
+        `${number(avgPoolPerUnitDay)} x ${number(price)} x 9 x 4 = ${money(asIsMonthlyCheck)}`;
+      $("clientPlatformMathLine").textContent =
+        `[(Live x Price) + (Recording x Price x (1-cut))] x 9 x 4 = ${money(withPlatformTutorMonthlyCheck)}`;
+      $("clientPlusMathLine").textContent =
+        `[(Live x Price) + (Rec x Blend x (1-cut)) + (Add-ons x (1-cut))] x 9 x 4 = ${money(plusTutorMonthlyCheck)}`;
+      $("clientMathConsistency").textContent =
+        totalClientDelta < 1 ? "OK" : `Check delta: ${money(totalClientDelta)}`;
+
       $("platformCutLine").textContent = pct(platformCut);
+      $("recordingWeeklyGrossCheck").textContent = money(withPlatformRecordingGrossWeek);
+      $("recordingMonthlyGrossCheck").textContent = money(withPlatformRecordingGrossWeek * 4);
+      $("recordingEquationLine").textContent =
+        `${number(withPlatformRecording)} x ${number(price)} x 9 x 4 = ${money(withPlatformRecordingGrossWeek * 4)}`;
       $("platformDailyRevenue").textContent = money(withPlatformPlatformRev / campaignDays);
-      $("platformMonthlyRevenue").textContent = money(withPlatformPlatformRev / (safeTotalWeeks / 4.345));
+      $("platformMonthlyRevenue").textContent = money((withPlatformPlatformRev / safeTotalWeeks) * 4);
       $("platformCampaignRevenue").textContent = money(withPlatformPlatformRev);
+      const expectedMonthlyPlatform = (withPlatformRecordingGrossWeek * 4) * platformCut;
+      const shownMonthlyPlatform = (withPlatformPlatformRev / safeTotalWeeks) * 4;
+      const mathDelta = Math.abs(expectedMonthlyPlatform - shownMonthlyPlatform);
+      $("mathConsistencyLine").textContent = mathDelta < 1 ? "OK" : `Check delta: ${money(mathDelta)}`;
       $("plusTutorNetPanel").textContent = money(plusTutorNet);
       $("plusGainPanel").textContent = money(plusGainVsAsIs);
-      $("plusTutorMonthlyLine").textContent = money(plusTutorNet / (safeTotalWeeks / 4.345));
+      $("plusTutorMonthlyLine").textContent = money((plusTutorNet / safeTotalWeeks) * 4);
       $("plusBlendPriceLine").textContent = money(recordingPricePlus);
       $("plusRecordingBuyersLine").textContent = number(plusRecordingFinal);
       $("plusAddonLine").textContent = money(premiumAddonPerUnitDay);
