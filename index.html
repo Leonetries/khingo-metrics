@@ -223,7 +223,7 @@
       box-shadow: var(--khingo-glow);
     }
 
-    .tab-panel.hidden {
+    .tab-panel.hidden {\
       display: none;
     }
 
@@ -354,6 +354,7 @@ ju
         <article class="kpi"><p class="label">Estimated November Buyers</p><p id="kpiNovBuyers" class="value">-</p></article>
         <article class="kpi"><p class="label">Manual Hours Saved/Month</p><p id="kpiHoursSaved" class="value">-</p></article>
         <article class="kpi"><p class="label">Admin Cost Saved/Month</p><p id="kpiAdminCostSaved" class="value">-</p></article>
+        <article class="kpi" style="border-color: var(--khingo-accent); box-shadow: var(--khingo-glow);"><p class="label" style="color:var(--khingo-accent);">Total Client Gain (May-Nov)</p><p id="kpiTotalGain" class="value" style="font-size:1.38rem;">-</p></article>
       </div>
     </section>
 
@@ -383,12 +384,12 @@ ju
 
       <div class="compare-grid">
         <article class="compare-card">
-          <h3>Expanded Content Offering</h3>
-          <p><span>May-Nov client net</span><strong id="plusTutorNet">-</strong></p>
-          <p><span>Avg daily buyers</span><strong id="plusDailyBuyers">-</strong></p>
-          <p><span>Recording price (blended)</span><strong id="plusRecordingPrice">-</strong></p>
-          <p><span>Gain vs As-Is</span><strong id="plusGain">-</strong></p>
-          <p><span>What changes</span><strong>Fragments + Q&A + urgency</strong></p>
+          <h3>As Currently Is</h3>
+          <p><span>May-Nov net</span><strong id="asIsNet">-</strong></p>
+          <p><span>Avg daily buyers</span><strong id="asIsDailyBuyers">-</strong></p>
+          <p><span>Nov buyers</span><strong id="asIsNovBuyers">-</strong></p>
+          <p><span>Recording share</span><strong id="asIsRecordingShare">-</strong></p>
+          <p><span>Risk</span><strong>Uncontrolled sharing</strong></p>
         </article>
         <article class="compare-card">
           <h3>With Platform (Recordings)</h3>
@@ -399,12 +400,13 @@ ju
           <p><span>What changes</span><strong>Secure recording access only</strong></p>
         </article>
         <article class="compare-card">
-          <h3>As Currently Is</h3>
-          <p><span>May-Nov net</span><strong id="asIsNet">-</strong></p>
-          <p><span>Avg daily buyers</span><strong id="asIsDailyBuyers">-</strong></p>
-          <p><span>Nov buyers</span><strong id="asIsNovBuyers">-</strong></p>
-          <p><span>Recording share</span><strong id="asIsRecordingShare">-</strong></p>
-          <p><span>Risk</span><strong>Uncontrolled sharing</strong></p>
+          <h3>Expanded Content Offering</h3>
+          <p><span>May-Nov client net</span><strong id="plusTutorNet">-</strong></p>
+          <p><span>Avg daily buyers</span><strong id="plusDailyBuyers">-</strong></p>
+          <p><span>Recording price (blended)</span><strong id="plusRecordingPrice">-</strong></p>
+          <p><span>Gain vs As-Is</span><strong id="plusGain">-</strong></p>
+          <p><span>Total Gain incl. admin savings</span><strong id="plusTotalGainCard">-</strong></p>
+          <p><span>What changes</span><strong>Fragments + Q&A + urgency</strong></p>
         </article>
       </div>
 
@@ -433,98 +435,98 @@ ju
         <div class="control-group-title">As-Is and Base Platform Inputs (recordings + recovery)</div>
 
         <div class="control">
-          <label for="cohort" title="Total students in the target audience. This caps buyer-related sliders.">Total cohort size <span id="cohortVal" class="val"></span></label>
+          <label for="cohort" title="Total students in the tutor's audience. Example: 2,600 students. Acts as a hard cap on all buyer counts — no scenario can project more buyers than this. Raising it raises the ceiling on every revenue figure.">Total cohort size <span id="cohortVal" class="val"></span></label>
           <input id="cohort" type="range" min="0" max="5000" value="2600" step="50">
         </div>
 
         <div class="control">
-          <label for="activeBuyers" title="Average paying buyers for one unit-delivery in May. This is the seasonal baseline.">May buyers per unit/day <span id="activeBuyersVal" class="val"></span></label>
+          <label for="activeBuyers" title="Number of students who pay for one recording on a typical day in May. Example: 250 means 250 purchases per unit delivered that day. This is the seasonal baseline — every other month is compared to it. Directly sets May revenue and anchors the campaign average.">May buyers per unit/day <span id="activeBuyersVal" class="val"></span></label>
           <input id="activeBuyers" type="range" min="0" max="2600" value="250" step="10">
         </div>
 
         <div class="control">
-          <label for="lockBuyersAcrossMonths" title="When on, Jun-Sep, Oct, and Nov buyer values are forced to match May for a flat-demand scenario.">Use same buyers value for all months <span id="lockBuyersAcrossMonthsVal" class="val">Off</span></label>
+          <label for="lockBuyersAcrossMonths" title="When ON, Jun-Sep, Oct, and Nov all use the May buyer count — useful for stress-testing a flat worst-case season. When OFF, each month has its own independent buyer slider. Affects the seasonal revenue path shown in the Scenario Assumptions strip.">Use same buyers value for all months <span id="lockBuyersAcrossMonthsVal" class="val">Off</span></label>
           <input id="lockBuyersAcrossMonths" type="checkbox">
         </div>
 
         <div class="control">
-          <label for="midSeasonMultiplier" title="Average paying buyers per unit-delivery during Jun-Sep.">Jun-Sep buyers per unit/day <span id="midSeasonMultiplierVal" class="val"></span></label>
+          <label for="midSeasonMultiplier" title="Buying students per unit/day during June–September (12 weeks). Example: 550. Exam preparation interest picks up during this period. Raising this lifts the 12-week mid-season revenue block, which is the longest single phase of the campaign.">Jun-Sep buyers per unit/day <span id="midSeasonMultiplierVal" class="val"></span></label>
           <input id="midSeasonMultiplier" type="range" min="0" max="2600" value="550" step="10">
         </div>
 
         <div class="control">
-          <label for="peakSeasonMultiplier" title="Average paying buyers per unit-delivery in October.">Oct buyers per unit/day <span id="peakSeasonMultiplierVal" class="val"></span></label>
+          <label for="peakSeasonMultiplier" title="Buyers per unit/day in October — the exam run-up month. Example: 1,000. Typically 3–4× the May baseline as students enter panic-revision mode. Sets the first half of the 10-week Oct-Nov peak block.">Oct buyers per unit/day <span id="peakSeasonMultiplierVal" class="val"></span></label>
           <input id="peakSeasonMultiplier" type="range" min="0" max="2600" value="1000" step="10">
         </div>
 
         <div class="control">
-          <label for="augustPeakBoost" title="Average paying buyers per unit-delivery in November exam period.">Nov buyers per unit/day (exam peak) <span id="augustPeakBoostVal" class="val"></span></label>
+          <label for="augustPeakBoost" title="Buyers per unit/day in November — the absolute exam peak. Example: 1,000 or higher. This is when students cram hardest. Directly sets the Estimated November Buyers KPI and drives the biggest revenue week in the model.">Nov buyers per unit/day (exam peak) <span id="augustPeakBoostVal" class="val"></span></label>
           <input id="augustPeakBoost" type="range" min="0" max="2600" value="1000" step="10">
         </div>
 
         <div class="control">
-          <label for="pricePerRecording" title="Selling price per recording transaction in KES.">Price per recording (KES) <span id="pricePerRecordingVal" class="val"></span></label>
+          <label for="pricePerRecording" title="Selling price per recording access in KES. Currently KES 100. This is the single biggest lever on total revenue — doubling it doubles all recording income. Affects every scenario (As-Is, With Platform, Expanded Offering).">Price per recording (KES) <span id="pricePerRecordingVal" class="val"></span></label>
           <input id="pricePerRecording" type="range" min="0" max="500" value="100" step="5">
         </div>
 
         <div class="control">
-          <label for="platformCut" title="Platform share applied to recording/add-on revenue handled on platform.">Platform cut (%) <span id="platformCutVal" class="val"></span></label>
+          <label for="platformCut" title="The % Khingo retains from every recording and add-on sale. Example: at 30%, a KES 100 sale returns KES 70 to the client and KES 30 to the platform. Live sessions are excluded entirely. Raising this reduces client net but increases platform revenue shown at the bottom.">Platform cut (%) <span id="platformCutVal" class="val"></span></label>
           <input id="platformCut" type="range" min="0" max="100" value="30" step="1">
         </div>
 
         <div class="control">
-          <label for="leakageRate" title="Percent of total buyers who purchase recordings rather than only attending live.">Of total buyers, those buying recordings (%) <span id="leakageRateVal" class="val"></span></label>
+          <label for="leakageRate" title="Of all daily buyers, the fraction who purchase recordings (vs. live-only attendees). Example: 60% means 60 out of 100 buyers pay for a recording. This drives the size of the recording revenue pool and determines how many transactions are exposed to link-sharing loss.">Of total buyers, those buying recordings (%) <span id="leakageRateVal" class="val"></span></label>
           <input id="leakageRate" type="range" min="0" max="100" value="60" step="1">
         </div>
 
         <div class="control">
-          <label for="recoveryRate" title="Share of lost would-have-paid viewers converted back into paying buyers via access control.">Recovery rate of destroyed transactions (%) <span id="recoveryRateVal" class="val"></span></label>
+          <label for="recoveryRate" title="Of the estimated lost sales caused by link sharing, what fraction can be recaptured through platform access control. Example: 50% means half the would-have-paid viewers become real buyers once sharing is blocked. Directly sets Recovered Buyers/Day KPI and drives the difference between As-Is and With Platform net.">Recovery rate of destroyed transactions (%) <span id="recoveryRateVal" class="val"></span></label>
           <input id="recoveryRate" type="range" min="0" max="100" value="50" step="1">
         </div>
 
         <div class="control">
-          <label for="weekdaySessions" title="Estimated additional viewers each recording buyer shares with who would otherwise have paid.">Would-have-been viewers per recording buyer <span id="weekdaySessionsVal" class="val"></span></label>
+          <label for="weekdaySessions" title="For every legitimate recording buyer, how many extra people receive a free copy via shared links who would otherwise have paid. Example: 2 means every 100 buyers effectively give away 200 additional accesses for free. Higher values mean more recoverable revenue waiting to be unlocked by access control.">Would-have-been viewers per recording buyer <span id="weekdaySessionsVal" class="val"></span></label>
           <input id="weekdaySessions" type="range" min="0" max="4" value="2" step="0.1">
         </div>
 
         <div class="control-group-title">Expanded Content Offering Inputs (client revenue maximization)</div>
         <div class="control">
-          <label for="recommendationsEnabled" title="Turns expanded content offering effects on/off. When off, expanded offering sliders do not affect math.">Enable expanded content offering <span id="recommendationsEnabledVal" class="val">Off</span></label>
+          <label for="recommendationsEnabled" title="Master toggle for the Expanded Content Offering scenario. When OFF, fragmentation, demand uplifts, and add-on GMV sliders are all zeroed out — only platform access control effects apply. When ON, all expanded content sliders feed into the third comparison column and the Total Client Gain figure.">Enable expanded content offering <span id="recommendationsEnabledVal" class="val">Off</span></label>
           <input id="recommendationsEnabled" type="checkbox">
         </div>
 
         <div class="control recommendation-control">
-          <label for="weekendSessionsPerDay" title="Percent price uplift from splitting long recordings into structured smaller paid parts.">Fragmentation blended recording price uplift (%) <span id="weekendSessionsPerDayVal" class="val"></span></label>
+          <label for="weekendSessionsPerDay" title="Expected blended price increase when long recordings are split into shorter titled clips. Example: 30% means the effective price per recording unit rises from KES 100 to KES 130. Affects recording revenue in the Expanded Content Offering column and increases both client net and platform share.">Fragmentation blended recording price uplift (%) <span id="weekendSessionsPerDayVal" class="val"></span></label>
           <input id="weekendSessionsPerDay" type="range" min="0" max="100" value="30" step="1">
         </div>
 
         <div class="control recommendation-control">
-          <label for="fragmentAdoption" title="Demand lift from syllabus-tagged clips and repeatability for quick topic revision.">Syllabus/repeatability recording demand uplift (%) <span id="fragmentAdoptionVal" class="val"></span></label>
+          <label for="fragmentAdoption" title="Demand boost from packaging content by syllabus topic, allowing students to revisit specific topics on demand. Example: 20% means the number of recording buyers grows by 20% beyond what the platform alone would achieve. Lifts the Expanded Content Offering client net.">Syllabus/repeatability recording demand uplift (%) <span id="fragmentAdoptionVal" class="val"></span></label>
           <input id="fragmentAdoption" type="range" min="0" max="100" value="20" step="1">
         </div>
 
         <div class="control recommendation-control">
-          <label for="fragmentParts" title="Extra daily GMV per unit-delivery from urgency products and paid Q&A style add-ons.">Urgency + Q&A add-on GMV per unit/day (KES) <span id="fragmentPartsVal" class="val"></span></label>
+          <label for="fragmentParts" title="Extra daily revenue from separately priced urgency content — oral exam prep, project walk-throughs, past paper revision packs — and Q&A playlists. Example: KES 2,500/day across 9 unit-deliveries adds roughly KES 157,500 over the 30-week campaign. Directly increases Expanded Content Offering client net and Total Client Gain.">Urgency + Q&A add-on GMV per unit/day (KES) <span id="fragmentPartsVal" class="val"></span></label>
           <input id="fragmentParts" type="range" min="0" max="10000" value="2500" step="100">
         </div>
 
         <div class="control recommendation-control">
-          <label for="fragmentPartPrice" title="Recording share used in the expanded content offering scenario after packaging improvements.">Recording share under expanded offering (%) <span id="fragmentPartPriceVal" class="val"></span></label>
+          <label for="fragmentPartPrice" title="Recording buyer share specifically in the Expanded Content Offering scenario. Fragmented clips and urgency packs typically attract a higher proportion of recording buyers than live-only content. Example: raising from 60% to 70% shifts more buyers into the platform-cut-bearing recording pool.">Recording share under expanded offering (%) <span id="fragmentPartPriceVal" class="val"></span></label>
           <input id="fragmentPartPrice" type="range" min="0" max="100" value="60" step="1">
         </div>
 
         <div class="control">
-          <label for="manualHoursDaily" title="Current daily time spent on manual payment checks and access handling.">Current manual admin hours/day <span id="manualHoursDailyVal" class="val"></span></label>
+          <label for="manualHoursDaily" title="Hours spent every day on manual payment confirmation, screenshot checking, and access granting. Example: 4.5 hrs/day. Multiplied by the automation efficiency, this gives the daily time reclaimed. Feeds the Manual Hours Saved/Month and Admin Cost Saved KPIs.">Current manual admin hours/day <span id="manualHoursDailyVal" class="val"></span></label>
           <input id="manualHoursDaily" type="range" min="0" max="16" value="4.5" step="0.5">
         </div>
 
         <div class="control">
-          <label for="billableHourRate" title="Estimated KES value of one admin hour to monetize time savings.">Billable hour rate (KES/hour) <span id="billableHourRateVal" class="val"></span></label>
+          <label for="billableHourRate" title="The KES value placed on one hour of the tutor's time. Example: KES 2,000/hr means saving 3.7 hrs/day is worth ~KES 7,400/day. Converts hours saved into the Admin Cost Saved/Month figure and feeds into Total Client Gain (May-Nov).">Billable hour rate (KES/hour) <span id="billableHourRateVal" class="val"></span></label>
           <input id="billableHourRate" type="range" min="500" max="10000" value="2000" step="100">
         </div>
 
         <div class="control">
-          <label for="automationEfficiency" title="Portion of manual workload expected to be eliminated through automation.">Automation efficiency (%) <span id="automationEfficiencyVal" class="val"></span></label>
+          <label for="automationEfficiency" title="The fraction of manual admin work that Khingo's automation eliminates. Example: 82% means the platform handles ~82% of payment confirmation and access management automatically. Scales both the Manual Hours Saved/Month and Admin Cost Saved KPIs.">Automation efficiency (%) <span id="automationEfficiencyVal" class="val"></span></label>
           <input id="automationEfficiency" type="range" min="0" max="100" value="82" step="1">
         </div>
       </article>
@@ -548,26 +550,21 @@ ju
         <div id="panelPlatformCore" class="tab-panel">
           <div class="results">
             <p><span>Platform take rate</span><strong id="platformCutLine">-</strong></p>
-            <p><span>Recording GMV (weekly, before cut)</span><strong id="recordingWeeklyGrossCheck">-</strong></p>
-            <p><span>Recording GMV (4-week month, before cut)</span><strong id="recordingMonthlyGrossCheck">-</strong></p>
-            <p><span>Equation check</span><strong id="recordingEquationLine">-</strong></p>
             <p><span>Platform kept revenue May-Nov</span><strong id="platformCampaignRevenue">-</strong></p>
             <p><span>Platform kept revenue (4-week month avg)</span><strong id="platformMonthlyRevenue">-</strong></p>
             <p><span>Platform kept revenue (daily avg)</span><strong id="platformDailyRevenue">-</strong></p>
-            <p><span>Math consistency</span><strong id="mathConsistencyLine">-</strong></p>
             <p><span>Revenue basis</span><strong>Recordings only (live excluded)</strong></p>
-            <p><span>Unit schedule</span><strong>9 unit-deliveries/week</strong></p>
           </div>
         </div>
 
         <div id="panelPlatformPlus" class="tab-panel hidden">
           <div class="results">
-            <p><span>Expanded offering May-Nov client net</span><strong id="plusTutorNetPanel">-</strong></p>
-            <p><span>Client uplift vs As-Is</span><strong id="plusGainPanel">-</strong></p>
-            <p><span>Expanded offering avg monthly client net</span><strong id="plusTutorMonthlyLine">-</strong></p>
-            <p><span>Blended recording price</span><strong id="plusBlendPriceLine">-</strong></p>
-            <p><span>Recording buyers/day under expanded offering</span><strong id="plusRecordingBuyersLine">-</strong></p>
-            <p><span>Q&A + urgency add-on/day</span><strong id="plusAddonLine">-</strong></p>
+            <p><span>Expanded offering platform kept May-Nov</span><strong id="plusTutorNetPanel">-</strong></p>
+            <p><span>Platform uplift vs core platform</span><strong id="plusGainPanel">-</strong></p>
+            <p><span>Expanded offering platform kept (4-week month avg)</span><strong id="plusTutorMonthlyLine">-</strong></p>
+            <p><span>Expanded offering platform kept (daily avg)</span><strong id="plusBlendPriceLine">-</strong></p>
+            <p><span>Take from expanded recordings/day</span><strong id="plusRecordingBuyersLine">-</strong></p>
+            <p><span>Take from add-ons/day</span><strong id="plusAddonLine">-</strong></p>
           </div>
 
           <div class="assumptions-strip" style="margin-top:10px;">
@@ -579,7 +576,7 @@ ju
               </div>
               <div class="assumption-pill">
                 <span>Plus formula</span><br>
-                <strong>Client net = live + recording net + add-on net</strong>
+                <strong>Platform = (recording + add-ons) x cut</strong>
               </div>
               <div class="assumption-pill">
                 <span>Live handling</span><br>
@@ -686,8 +683,6 @@ ju
         (avgLiveBuyers * price) +
         (withPlatformRecording * price * (1 - platformCut));
       const withPlatformPlatformUnitDay = withPlatformRecording * price * platformCut;
-      const withPlatformRecordingGrossUnitDay = withPlatformRecording * price;
-      const withPlatformRecordingGrossWeek = withPlatformRecordingGrossUnitDay * unitDaysPerWeek;
       const withPlatformTutorNet = withPlatformTutorUnitDay * unitDaysPerWeek * safeTotalWeeks;
       const withPlatformPlatformRev = withPlatformPlatformUnitDay * unitDaysPerWeek * safeTotalWeeks;
 
@@ -717,8 +712,12 @@ ju
 
       const monthlyHoursSaved = manualHoursDaily * automationEfficiency * 30;
       const monthlyAdminCostSaved = monthlyHoursSaved * billableHourRate;
+      // Campaign admin savings: 30-week campaign = 210 days; at 30 days/month = 7 months
+      const campaignAdminCostSaved = monthlyAdminCostSaved * (safeTotalWeeks * 7 / 30);
       const tutorGainVsAsIs = withPlatformTutorNet - asIsMayNovNet;
       const plusGainVsAsIs = plusTutorNet - asIsMayNovNet;
+      // Total client gain = revenue gain from expanded offering + full-campaign admin savings
+      const totalClientGain = plusGainVsAsIs + campaignAdminCostSaved;
 
       const novBuyersEstimated = novPool;
 
@@ -730,6 +729,7 @@ ju
       $("kpiNovBuyers").textContent = number(novBuyersEstimated);
       $("kpiHoursSaved").textContent = number(monthlyHoursSaved);
       $("kpiAdminCostSaved").textContent = money(monthlyAdminCostSaved);
+      $("kpiTotalGain").textContent = money(totalClientGain);
 
       $("asIsNet").textContent = money(asIsMayNovNet);
       $("asIsDailyBuyers").textContent = number(avgPoolPerUnitDay);
@@ -745,6 +745,7 @@ ju
       $("plusDailyBuyers").textContent = number(plusTotalBuyers);
       $("plusRecordingPrice").textContent = money(recordingPricePlus);
       $("plusGain").textContent = money(plusGainVsAsIs);
+      $("plusTotalGainCard").textContent = money(totalClientGain);
 
       $("assumptionPath").textContent = `${number(mayPool)} -> ${number(midPool)} -> ${number(octPool)} -> ${number(novPool)}`;
       $("assumptionRecordingShare").textContent = pct(recordingShare);
@@ -752,23 +753,15 @@ ju
       $("assumptionRecoveredRate").textContent = pct(recoveredAudienceRate);
 
       $("platformCutLine").textContent = pct(platformCut);
-      $("recordingWeeklyGrossCheck").textContent = money(withPlatformRecordingGrossWeek);
-      $("recordingMonthlyGrossCheck").textContent = money(withPlatformRecordingGrossWeek * 4);
-      $("recordingEquationLine").textContent =
-        `${number(withPlatformRecording)} x ${number(price)} x 9 x 4 = ${money(withPlatformRecordingGrossWeek * 4)}`;
       $("platformDailyRevenue").textContent = money(withPlatformPlatformRev / campaignDays);
       $("platformMonthlyRevenue").textContent = money((withPlatformPlatformRev / safeTotalWeeks) * 4);
       $("platformCampaignRevenue").textContent = money(withPlatformPlatformRev);
-      const expectedMonthlyPlatform = (withPlatformRecordingGrossWeek * 4) * platformCut;
-      const shownMonthlyPlatform = (withPlatformPlatformRev / safeTotalWeeks) * 4;
-      const mathDelta = Math.abs(expectedMonthlyPlatform - shownMonthlyPlatform);
-      $("mathConsistencyLine").textContent = mathDelta < 1 ? "OK" : `Check delta: ${money(mathDelta)}`;
-      $("plusTutorNetPanel").textContent = money(plusTutorNet);
-      $("plusGainPanel").textContent = money(plusGainVsAsIs);
-      $("plusTutorMonthlyLine").textContent = money((plusTutorNet / safeTotalWeeks) * 4);
-      $("plusBlendPriceLine").textContent = money(recordingPricePlus);
-      $("plusRecordingBuyersLine").textContent = number(plusRecordingFinal);
-      $("plusAddonLine").textContent = money(premiumAddonPerUnitDay);
+      $("plusTutorNetPanel").textContent = money(plusPlatformRev);
+      $("plusGainPanel").textContent = money(plusPlatformRev - withPlatformPlatformRev);
+      $("plusTutorMonthlyLine").textContent = money((plusPlatformRev / safeTotalWeeks) * 4);
+      $("plusBlendPriceLine").textContent = money(plusPlatformRev / campaignDays);
+      $("plusRecordingBuyersLine").textContent = money((plusRecordingFinal * recordingPricePlus * platformCut));
+      $("plusAddonLine").textContent = money((premiumAddonPerUnitDay * platformCut));
       $("recommendationsEnabledVal").textContent = recommendationsEnabled ? "On" : "Off";
       $("lockBuyersAcrossMonthsVal").textContent = lockBuyersAcrossMonths ? "On" : "Off";
     }
