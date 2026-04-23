@@ -6,23 +6,28 @@
   <title>Khingo Revenue Protection Pitch</title>
   <style>
     :root {
-      --khingo-primary: #0f3d5e;
-      --khingo-secondary: #159895;
-      --khingo-accent: #57c5b6;
-      --khingo-surface: #f4fbfb;
-      --khingo-card: #ffffff;
-      --khingo-text: #0a1f2f;
-      --khingo-muted: #55708a;
-      --khingo-border: #d6e8ef;
-      --khingo-positive: #0b8f4d;
+      --khingo-bg: #050505;
+      --khingo-card: rgba(26, 26, 26, 0.72);
+      --khingo-card-soft: rgba(18, 18, 18, 0.62);
+      --khingo-text: #f5f6f9;
+      --khingo-muted: #b7bac5;
+      --khingo-border: rgba(255, 255, 255, 0.12);
+      --khingo-accent: #beff00;
+      --khingo-accent-soft: rgba(190, 255, 0, 0.2);
+      --khingo-glow: 0 0 24px rgba(190, 255, 0, 0.22);
+      --khingo-success: #00c833;
     }
 
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      font-family: Inter, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       color: var(--khingo-text);
-      background: linear-gradient(170deg, #eaf7f8 0%, #f7fbff 50%, #ffffff 100%);
+      background-color: var(--khingo-bg);
+      background-image:
+        radial-gradient(circle at top left, rgba(190, 255, 0, 0.08), transparent 30%),
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.05), transparent 24%),
+        radial-gradient(circle at bottom right, rgba(190, 255, 0, 0.06), transparent 26%);
     }
 
     .wrap {
@@ -32,15 +37,17 @@
     }
 
     .hero {
-      background: linear-gradient(135deg, var(--khingo-primary), #14588a);
-      color: #fff;
-      border-radius: 16px;
+      background: linear-gradient(140deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+      border: 1px solid var(--khingo-border);
+      color: var(--khingo-text);
+      border-radius: 20px;
       padding: 24px;
-      box-shadow: 0 10px 26px rgba(15, 61, 94, 0.25);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.4);
     }
 
-    .hero h1 { margin: 0 0 8px; font-size: 1.7rem; }
-    .hero p { margin: 0; opacity: 0.95; line-height: 1.5; }
+    .hero h1 { margin: 0 0 8px; font-size: 1.72rem; letter-spacing: -0.02em; }
+    .hero p { margin: 0; color: var(--khingo-muted); line-height: 1.5; max-width: 860px; }
 
     .kpi-grid {
       margin-top: 18px;
@@ -50,11 +57,17 @@
     }
 
     .kpi {
-      background: var(--khingo-card);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
       border: 1px solid var(--khingo-border);
       border-radius: 14px;
       padding: 14px;
-      box-shadow: 0 4px 14px rgba(20, 88, 138, 0.08);
+      backdrop-filter: blur(10px);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .kpi:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--khingo-glow);
     }
 
     .kpi .label {
@@ -68,7 +81,8 @@
       margin: 8px 0 0;
       font-size: 1.22rem;
       font-weight: 700;
-      color: var(--khingo-primary);
+      color: var(--khingo-accent);
+      font-variant-numeric: tabular-nums;
     }
 
     .layout {
@@ -79,23 +93,24 @@
     }
 
     .panel {
-      background: var(--khingo-card);
+      background: var(--khingo-card-soft);
       border: 1px solid var(--khingo-border);
-      border-radius: 14px;
+      border-radius: 18px;
       padding: 16px;
-      box-shadow: 0 4px 14px rgba(20, 88, 138, 0.08);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.3);
     }
 
     .panel h2 {
       margin: 0 0 12px;
-      color: var(--khingo-primary);
+      color: var(--khingo-accent);
       font-size: 1.1rem;
     }
 
     .control {
       margin-bottom: 12px;
       padding-bottom: 10px;
-      border-bottom: 1px dashed var(--khingo-border);
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.12);
     }
 
     .control:last-child { border-bottom: 0; padding-bottom: 0; margin-bottom: 0; }
@@ -109,14 +124,15 @@
     }
 
     .val {
-      color: var(--khingo-secondary);
+      color: var(--khingo-accent);
       font-weight: 700;
       font-size: 0.86rem;
+      font-variant-numeric: tabular-nums;
     }
 
     input[type="range"], input[type="number"] {
       width: 100%;
-      accent-color: var(--khingo-secondary);
+      accent-color: var(--khingo-accent);
     }
 
     .results p {
@@ -127,14 +143,14 @@
       font-size: 0.92rem;
     }
 
-    .results strong { color: var(--khingo-primary); }
+    .results strong { color: var(--khingo-accent); font-variant-numeric: tabular-nums; }
     .note {
       margin-top: 14px;
       padding: 12px;
       border-radius: 10px;
-      background: #edfbf4;
-      border: 1px solid #c6f1da;
-      color: #0f5c34;
+      background: rgba(0, 200, 51, 0.08);
+      border: 1px solid rgba(0, 200, 51, 0.25);
+      color: #c9ffd8;
       font-weight: 600;
     }
 
@@ -146,12 +162,17 @@
     }
 
     .card {
-      background: var(--khingo-surface);
+      background: var(--khingo-card);
       border: 1px solid var(--khingo-border);
       border-radius: 12px;
       padding: 12px;
       font-size: 0.9rem;
       line-height: 1.45;
+      color: var(--khingo-muted);
+    }
+
+    .card strong {
+      color: var(--khingo-text);
     }
 
     @media (max-width: 950px) {
@@ -163,7 +184,7 @@
 <body>
   <div class="wrap">
     <section class="hero">
-      <h1>Khingo Client Revenue Protection Model</h1>
+      <h1>Khingo Studio Revenue Protection Model</h1>
       <p>
         Live scenario simulator for stopping revenue leakage, reducing manual workload, and increasing
         tutor earnings through controlled access and smarter content packaging.
@@ -171,8 +192,10 @@
       <div class="kpi-grid">
         <article class="kpi"><p class="label">Daily Net (KES)</p><p id="kpiDaily" class="value">-</p></article>
         <article class="kpi"><p class="label">Monthly Net (KES)</p><p id="kpiMonthly" class="value">-</p></article>
-        <article class="kpi"><p class="label">Annual Net (KES)</p><p id="kpiAnnual" class="value">-</p></article>
-        <article class="kpi"><p class="label">Leakage Prevented (KES/Month)</p><p id="kpiLeakageStopped" class="value">-</p></article>
+        <article class="kpi"><p class="label">May-Nov Net (KES)</p><p id="kpiAnnual" class="value">-</p></article>
+        <article class="kpi"><p class="label">Leakage Recovered (KES/Month)</p><p id="kpiLeakageStopped" class="value">-</p></article>
+        <article class="kpi"><p class="label">Revenue Retention Gain</p><p id="kpiRetentionGain" class="value">-</p></article>
+        <article class="kpi"><p class="label">Estimated November Buyers</p><p id="kpiAugustBuyers" class="value">-</p></article>
         <article class="kpi"><p class="label">Manual Hours Saved/Month</p><p id="kpiHoursSaved" class="value">-</p></article>
         <article class="kpi"><p class="label">Net Uplift vs Current</p><p id="kpiUplift" class="value">-</p></article>
       </div>
@@ -184,12 +207,17 @@
 
         <div class="control">
           <label for="cohort">Total cohort <span id="cohortVal" class="val"></span></label>
-          <input id="cohort" type="range" min="0" max="5000" value="2200" step="50">
+          <input id="cohort" type="range" min="0" max="5000" value="2600" step="50">
         </div>
 
         <div class="control">
           <label for="activeBuyers">Active purchasing students <span id="activeBuyersVal" class="val"></span></label>
-          <input id="activeBuyers" type="range" min="0" max="2200" value="900" step="10">
+          <input id="activeBuyers" type="range" min="0" max="2600" value="1600" step="10">
+        </div>
+
+        <div class="control">
+          <label for="augustPeakBoost">November peak boost on buyers (%) <span id="augustPeakBoostVal" class="val"></span></label>
+          <input id="augustPeakBoost" type="range" min="0" max="120" value="45" step="1">
         </div>
 
         <div class="control">
@@ -199,17 +227,17 @@
 
         <div class="control">
           <label for="platformCut">Platform cut (%) <span id="platformCutVal" class="val"></span></label>
-          <input id="platformCut" type="range" min="0" max="100" value="30" step="1">
+          <input id="platformCut" type="range" min="0" max="100" value="22" step="1">
         </div>
 
         <div class="control">
           <label for="leakageRate">Revenue leakage from sharing (%) <span id="leakageRateVal" class="val"></span></label>
-          <input id="leakageRate" type="range" min="0" max="100" value="35" step="1">
+          <input id="leakageRate" type="range" min="0" max="100" value="48" step="1">
         </div>
 
         <div class="control">
           <label for="recoveryRate">Leakage recovery with platform (%) <span id="recoveryRateVal" class="val"></span></label>
-          <input id="recoveryRate" type="range" min="0" max="100" value="80" step="1">
+          <input id="recoveryRate" type="range" min="0" max="100" value="88" step="1">
         </div>
 
         <div class="control">
@@ -224,12 +252,12 @@
 
         <div class="control">
           <label for="fragmentAdoption">Fragmented-content adoption (%) <span id="fragmentAdoptionVal" class="val"></span></label>
-          <input id="fragmentAdoption" type="range" min="0" max="100" value="40" step="1">
+          <input id="fragmentAdoption" type="range" min="0" max="100" value="58" step="1">
         </div>
 
         <div class="control">
           <label for="fragmentParts">Parts per full recording <span id="fragmentPartsVal" class="val"></span></label>
-          <input id="fragmentParts" type="range" min="0" max="5" value="2" step="1">
+          <input id="fragmentParts" type="range" min="0" max="5" value="3" step="1">
         </div>
 
         <div class="control">
@@ -239,27 +267,27 @@
 
         <div class="control">
           <label for="urgencyAdoption">Urgency content adoption (%) <span id="urgencyAdoptionVal" class="val"></span></label>
-          <input id="urgencyAdoption" type="range" min="0" max="100" value="25" step="1">
+          <input id="urgencyAdoption" type="range" min="0" max="100" value="42" step="1">
         </div>
 
         <div class="control">
           <label for="urgencyPrice">Urgency content price (KES/item) <span id="urgencyPriceVal" class="val"></span></label>
-          <input id="urgencyPrice" type="range" min="0" max="500" value="150" step="5">
+          <input id="urgencyPrice" type="range" min="0" max="500" value="180" step="5">
         </div>
 
         <div class="control">
           <label for="urgencyItemsWeekly">Urgency items weekly <span id="urgencyItemsWeeklyVal" class="val"></span></label>
-          <input id="urgencyItemsWeekly" type="range" min="0" max="14" value="2" step="1">
+          <input id="urgencyItemsWeekly" type="range" min="0" max="14" value="3" step="1">
         </div>
 
         <div class="control">
           <label for="manualHoursDaily">Current manual admin hours/day <span id="manualHoursDailyVal" class="val"></span></label>
-          <input id="manualHoursDaily" type="range" min="0" max="16" value="3" step="0.5">
+          <input id="manualHoursDaily" type="range" min="0" max="16" value="4.5" step="0.5">
         </div>
 
         <div class="control">
           <label for="automationEfficiency">Automation efficiency (%) <span id="automationEfficiencyVal" class="val"></span></label>
-          <input id="automationEfficiency" type="range" min="0" max="100" value="75" step="1">
+          <input id="automationEfficiency" type="range" min="0" max="100" value="82" step="1">
         </div>
       </article>
 
@@ -268,10 +296,13 @@
         <div class="results">
           <p><span>Current daily net (after leakage)</span><strong id="currentDaily">-</strong></p>
           <p><span>With platform daily net (after cut)</span><strong id="withPlatformDaily">-</strong></p>
+          <p><span>Current revenue retention</span><strong id="currentRetention">-</strong></p>
+          <p><span>Projected revenue retention</span><strong id="projectedRetention">-</strong></p>
+          <p><span>Estimated November buyers</span><strong id="augustBuyersLine">-</strong></p>
           <p><span>Daily uplift</span><strong id="dailyUplift">-</strong></p>
           <p><span>Monthly uplift</span><strong id="monthlyUplift">-</strong></p>
-          <p><span>Annual uplift</span><strong id="annualUplift">-</strong></p>
-          <p><span>Recovered leakage/month</span><strong id="leakageRecoveredMonthly">-</strong></p>
+          <p><span>May-Nov uplift</span><strong id="annualUplift">-</strong></p>
+          <p><span>Recovered leakage/month (net)</span><strong id="leakageRecoveredMonthly">-</strong></p>
           <p><span>Fragmentation uplift/month</span><strong id="fragmentUpliftMonthly">-</strong></p>
           <p><span>Urgency content uplift/month</span><strong id="urgencyUpliftMonthly">-</strong></p>
           <p><span>Manual hours saved/month</span><strong id="hoursSavedMonthly">-</strong></p>
@@ -297,7 +328,7 @@
 
   <script>
     const ids = [
-      "cohort", "activeBuyers", "pricePerRecording", "platformCut", "leakageRate", "recoveryRate",
+      "cohort", "activeBuyers", "augustPeakBoost", "pricePerRecording", "platformCut", "leakageRate", "recoveryRate",
       "weekdaySessions", "weekendSessionsPerDay", "fragmentAdoption", "fragmentParts",
       "fragmentPartPrice", "urgencyAdoption", "urgencyPrice", "urgencyItemsWeekly",
       "manualHoursDaily", "automationEfficiency"
@@ -311,6 +342,10 @@
       return Math.min(100, Math.max(0, v)) / 100;
     }
 
+    function pct(v) {
+      return `${(Math.max(0, v) * 100).toFixed(1)}%`;
+    }
+
     function syncDisplay(id, suffix = "") {
       $(id + "Val").textContent = `${$(id).value}${suffix}`;
     }
@@ -321,6 +356,7 @@
       if (+$("activeBuyers").value > cohort) $("activeBuyers").value = cohort;
 
       const active = +$("activeBuyers").value;
+      const augustPeakBoost = clampPct(+$("augustPeakBoost").value);
       const price = +$("pricePerRecording").value;
       const platformCut = clampPct(+$("platformCut").value);
       const leakageRate = clampPct(+$("leakageRate").value);
@@ -339,38 +375,85 @@
       const weeklySessions = (weekdaySessions * 5) + (weekendSessionsPerDay * 2);
       const sessionsPerDay = weeklySessions / 7;
 
-      const dailyGrossPotential = active * price * sessionsPerDay;
-      const dailyLeakage = dailyGrossPotential * leakageRate;
-      const currentDailyNet = dailyGrossPotential - dailyLeakage;
-      const leakageRecoveredDaily = dailyLeakage * recoveryRate;
+      const fragmentPerSessionIncrement = fragmentParts > 0 ? Math.max((fragmentParts * fragmentPartPrice) - price, 0) : 0;
 
-      const fragmentPerSessionIncrement = Math.max((fragmentParts * fragmentPartPrice) - price, 0);
-      const dailyFragmentUplift = active * fragmentAdoption * fragmentPerSessionIncrement * sessionsPerDay;
+      function calcSnapshot(activeStudents) {
+        const boundedActive = Math.max(0, Math.min(activeStudents, cohort));
+        const dailyGrossPotential = boundedActive * price * sessionsPerDay;
+        const dailyLeakage = dailyGrossPotential * leakageRate;
+        const currentDailyNet = dailyGrossPotential - dailyLeakage;
+        const protectedCoreDaily = dailyGrossPotential - (dailyLeakage * (1 - recoveryRate));
+        const dailyFragmentUplift = boundedActive * fragmentAdoption * fragmentPerSessionIncrement * sessionsPerDay;
+        const dailyUrgencyUplift = boundedActive * urgencyAdoption * urgencyPrice * (urgencyItemsWeekly / 7);
+        const dailyBeforeCut = protectedCoreDaily + dailyFragmentUplift + dailyUrgencyUplift;
+        const dailyTutorNet = dailyBeforeCut * (1 - platformCut);
+        return {
+          boundedActive,
+          dailyGrossPotential,
+          currentDailyNet,
+          protectedCoreDaily,
+          dailyFragmentUplift,
+          dailyUrgencyUplift,
+          dailyTutorNet
+        };
+      }
 
-      const dailyUrgencyUplift = active * urgencyAdoption * urgencyPrice * (urgencyItemsWeekly / 7);
-
-      const dailyBeforeCut = currentDailyNet + leakageRecoveredDaily + dailyFragmentUplift + dailyUrgencyUplift;
-      const dailyTutorNet = dailyBeforeCut * (1 - platformCut);
+      const base = calcSnapshot(active);
+      const dailyGrossPotential = base.dailyGrossPotential;
+      const currentDailyNet = base.currentDailyNet;
+      const protectedCoreDaily = base.protectedCoreDaily;
+      const dailyFragmentUplift = base.dailyFragmentUplift;
+      const dailyUrgencyUplift = base.dailyUrgencyUplift;
+      const dailyTutorNet = base.dailyTutorNet;
 
       const dailyUplift = dailyTutorNet - currentDailyNet;
       const monthlyTutorNet = dailyTutorNet * 30;
-      const annualTutorNet = dailyTutorNet * 365;
       const monthlyUplift = dailyUplift * 30;
-      const annualUplift = dailyUplift * 365;
-      const monthlyLeakageRecovered = leakageRecoveredDaily * 30;
+      const monthlyLeakageRecovered = (protectedCoreDaily - currentDailyNet) * 30 * (1 - platformCut);
       const monthlyFragmentUplift = dailyFragmentUplift * 30 * (1 - platformCut);
       const monthlyUrgencyUplift = dailyUrgencyUplift * 30 * (1 - platformCut);
       const monthlyHoursSaved = manualHoursDaily * automationEfficiency * 30;
+      const currentRetention = dailyGrossPotential > 0 ? (currentDailyNet / dailyGrossPotential) : 0;
+      const projectedRetention = dailyGrossPotential > 0 ? (dailyTutorNet / dailyGrossPotential) : 0;
+      const retentionGain = projectedRetention - currentRetention;
+
+      // May-Nov demand seasonality with a November exam peak.
+      const seasonalProfile = [
+        { name: "May", days: 31, factor: 0.70 },
+        { name: "Jun", days: 30, factor: 0.76 },
+        { name: "Jul", days: 31, factor: 0.84 },
+        { name: "Aug", days: 31, factor: 0.92 },
+        { name: "Sep", days: 30, factor: 1.00 },
+        { name: "Oct", days: 31, factor: 1.08 },
+        { name: "Nov", days: 30, factor: 1 + augustPeakBoost }
+      ];
+
+      let campaignTutorNet = 0;
+      let campaignCurrentNet = 0;
+      seasonalProfile.forEach((m) => {
+        const monthActive = active * m.factor;
+        const snap = calcSnapshot(monthActive);
+        campaignTutorNet += snap.dailyTutorNet * m.days;
+        campaignCurrentNet += snap.currentDailyNet * m.days;
+      });
+      const annualTutorNet = campaignTutorNet;
+      const annualUplift = campaignTutorNet - campaignCurrentNet;
+      const augustBuyers = Math.max(0, Math.min(Math.round(active * (1 + augustPeakBoost)), cohort));
 
       $("kpiDaily").textContent = money(dailyTutorNet);
       $("kpiMonthly").textContent = money(monthlyTutorNet);
       $("kpiAnnual").textContent = money(annualTutorNet);
       $("kpiLeakageStopped").textContent = money(monthlyLeakageRecovered);
+      $("kpiRetentionGain").textContent = pct(retentionGain);
+      $("kpiAugustBuyers").textContent = number(augustBuyers);
       $("kpiHoursSaved").textContent = number(monthlyHoursSaved);
       $("kpiUplift").textContent = money(monthlyUplift);
 
       $("currentDaily").textContent = money(currentDailyNet);
       $("withPlatformDaily").textContent = money(dailyTutorNet);
+      $("currentRetention").textContent = pct(currentRetention);
+      $("projectedRetention").textContent = pct(projectedRetention);
+      $("augustBuyersLine").textContent = number(augustBuyers);
       $("dailyUplift").textContent = money(dailyUplift);
       $("monthlyUplift").textContent = money(monthlyUplift);
       $("annualUplift").textContent = money(annualUplift);
@@ -387,6 +470,7 @@
     function bindControls() {
       syncDisplay("cohort");
       syncDisplay("activeBuyers");
+      syncDisplay("augustPeakBoost", "%");
       syncDisplay("pricePerRecording", " KES");
       syncDisplay("platformCut", "%");
       syncDisplay("leakageRate", "%");
@@ -412,6 +496,7 @@
             platformCut: "%",
             leakageRate: "%",
             recoveryRate: "%",
+            augustPeakBoost: "%",
             fragmentAdoption: "%",
             fragmentPartPrice: " KES",
             urgencyAdoption: "%",
@@ -430,4 +515,3 @@
   </script>
 </body>
 </html>
-
