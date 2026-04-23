@@ -95,9 +95,11 @@
 
     .layout {
       margin-top: 18px;
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 16px;
+      display: block;
+    }
+
+    .layout > .panel {
+      margin-bottom: 16px;
     }
 
     .panel {
@@ -213,8 +215,60 @@
 
     .compare-grid {
       display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .summary-strip {
+      margin-top: 12px;
+      border: 1px solid var(--khingo-border);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 10px;
+      display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 10px;
+    }
+
+    .summary-item {
+      border: 1px solid var(--khingo-border);
+      border-radius: 10px;
+      padding: 8px;
+      background: rgba(255, 255, 255, 0.02);
+      font-size: 0.86rem;
+      color: var(--khingo-muted);
+    }
+
+    .summary-item strong {
+      color: var(--khingo-accent);
+      display: block;
+      margin-top: 3px;
+      font-size: 0.95rem;
+    }
+
+    .preset-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 12px;
+    }
+
+    .preset-btn {
+      border: 1px solid var(--khingo-border);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--khingo-text);
+      border-radius: 999px;
+      padding: 6px 11px;
+      cursor: pointer;
+      font-size: 0.84rem;
+      font-weight: 600;
+    }
+
+    .objection-list p {
+      margin: 8px 0;
+      color: var(--khingo-muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
     }
 
     .assumptions-strip {
@@ -290,10 +344,9 @@
     }
 
     @media (max-width: 950px) {
-      .layout { grid-template-columns: 1fr; }
       .mini { grid-template-columns: 1fr; }
-      .compare-grid { grid-template-columns: 1fr; }
       .assumption-items { grid-template-columns: 1fr 1fr; }
+      .summary-strip { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -308,12 +361,26 @@
       <div class="kpi-grid">
         <article class="kpi"><p class="label">As-Is May-Nov Net</p><p id="kpiAsIs" class="value">-</p></article>
         <article class="kpi"><p class="label">With Platform May-Nov Net</p><p id="kpiWithPlatform" class="value">-</p></article>
-        <article class="kpi"><p class="label">Platform Plus May-Nov Net</p><p id="kpiPlus" class="value">-</p></article>
+        <article class="kpi"><p class="label">Recommendations May-Nov Net</p><p id="kpiPlus" class="value">-</p></article>
         <article class="kpi"><p class="label">Tutor Gain vs As-Is</p><p id="kpiGain" class="value">-</p></article>
         <article class="kpi"><p class="label">Recovered Recording Buyers/Day</p><p id="kpiRecoveredBuyers" class="value">-</p></article>
         <article class="kpi"><p class="label">Estimated November Buyers</p><p id="kpiNovBuyers" class="value">-</p></article>
         <article class="kpi"><p class="label">Manual Hours Saved/Month</p><p id="kpiHoursSaved" class="value">-</p></article>
         <article class="kpi"><p class="label">Platform Revenue (VOD only)</p><p id="kpiPlatformRev" class="value">-</p></article>
+      </div>
+      <div class="summary-strip">
+        <div class="summary-item">
+          Client uplift vs current
+          <strong id="summaryUplift">-</strong>
+        </div>
+        <div class="summary-item">
+          Manual workload reduction
+          <strong id="summaryHours">-</strong>
+        </div>
+        <div class="summary-item">
+          VOD-only rollout
+          <strong id="summaryRollout">Live sessions unchanged</strong>
+        </div>
       </div>
     </section>
 
@@ -331,7 +398,7 @@
             <strong id="assumptionRecordingShare">-</strong>
           </div>
           <div class="assumption-pill">
-            <span>Destroyed buyers per recording buyer</span><br>
+            <span>Would-have-been viewers per recording buyer</span><br>
             <strong id="assumptionDestroyedRate">-</strong>
           </div>
           <div class="assumption-pill">
@@ -385,6 +452,11 @@
     <section class="layout">
       <article class="panel">
         <h2>Adjustable Assumptions</h2>
+        <div class="preset-row">
+          <button id="presetConservative" class="preset-btn" type="button">Conservative</button>
+          <button id="presetExpected" class="preset-btn" type="button">Expected</button>
+          <button id="presetAggressive" class="preset-btn" type="button">Aggressive</button>
+        </div>
 
         <div class="control">
           <label for="cohort">Total cohort size <span id="cohortVal" class="val"></span></label>
@@ -422,7 +494,7 @@
         </div>
 
         <div class="control">
-          <label for="leakageRate">Recording buyers share (%) <span id="leakageRateVal" class="val"></span></label>
+          <label for="leakageRate">Of total buyers, those buying recordings (%) <span id="leakageRateVal" class="val"></span></label>
           <input id="leakageRate" type="range" min="0" max="100" value="60" step="1">
         </div>
 
@@ -432,7 +504,7 @@
         </div>
 
         <div class="control">
-          <label for="weekdaySessions">Would-have-paid viewers per recording buyer <span id="weekdaySessionsVal" class="val"></span></label>
+          <label for="weekdaySessions">Would-have-been viewers per recording buyer <span id="weekdaySessionsVal" class="val"></span></label>
           <input id="weekdaySessions" type="range" min="0" max="4" value="2" step="0.1">
         </div>
 
@@ -468,10 +540,19 @@
       </article>
 
       <article class="panel">
-        <h2>Platform Revenue (VOD only)</h2>
+        <h2>Meeting Objection Answers</h2>
+        <div class="objection-list">
+          <p><strong>Teaching workflow:</strong> Live delivery remains on Google Meet; this rollout changes recording access and monetization only.</p>
+          <p><strong>Risk profile:</strong> VOD-only scope lowers implementation complexity while addressing the largest leakage source immediately.</p>
+          <p><strong>Commercial logic:</strong> Every figure is slider-driven, so assumptions can be challenged and adjusted transparently during the meeting.</p>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>Revenue Breakdown (VOD only)</h2>
         <div class="tabs">
           <button id="tabPlatformCore" class="tab-btn active" type="button">Platform Revenue</button>
-          <button id="tabPlatformPlus" class="tab-btn" type="button">Platform Plus Revenue Model</button>
+          <button id="tabPlatformPlus" class="tab-btn" type="button">Client Recommendations Model</button>
         </div>
 
         <div id="panelPlatformCore" class="tab-panel">
@@ -487,11 +568,11 @@
 
         <div id="panelPlatformPlus" class="tab-panel hidden">
           <div class="results">
-            <p><span>Platform Plus May-Nov</span><strong id="platformPlusCampaignRevenue">-</strong></p>
-            <p><span>Avg monthly (plus)</span><strong id="platformPlusMonthlyRevenue">-</strong></p>
-            <p><span>Daily average (plus)</span><strong id="platformPlusDailyRevenue">-</strong></p>
-            <p><span>Plus blended recording price</span><strong id="plusBlendPriceLine">-</strong></p>
-            <p><span>Plus recording buyers/day</span><strong id="plusRecordingBuyersLine">-</strong></p>
+            <p><span>Recommendations May-Nov tutor net</span><strong id="plusTutorNetPanel">-</strong></p>
+            <p><span>Tutor uplift vs As-Is</span><strong id="plusGainPanel">-</strong></p>
+            <p><span>Recommendations avg monthly tutor net</span><strong id="plusTutorMonthlyLine">-</strong></p>
+            <p><span>Blended recording price</span><strong id="plusBlendPriceLine">-</strong></p>
+            <p><span>Recording buyers/day under recommendations</span><strong id="plusRecordingBuyersLine">-</strong></p>
             <p><span>Q&A + urgency add-on/day</span><strong id="plusAddonLine">-</strong></p>
           </div>
 
@@ -504,7 +585,7 @@
               </div>
               <div class="assumption-pill">
                 <span>Plus formula</span><br>
-                <strong>(recording + add-ons) x cut</strong>
+                <strong>Tutor net = live + recording net + add-on net</strong>
               </div>
               <div class="assumption-pill">
                 <span>Live handling</span><br>
@@ -649,6 +730,8 @@
       $("kpiNovBuyers").textContent = number(novBuyersEstimated);
       $("kpiHoursSaved").textContent = number(monthlyHoursSaved);
       $("kpiPlatformRev").textContent = money(withPlatformPlatformRev);
+      $("summaryUplift").textContent = money(plusGainVsAsIs);
+      $("summaryHours").textContent = `${number(monthlyHoursSaved)} hrs/month`;
 
       $("asIsNet").textContent = money(asIsMayNovNet);
       $("asIsDailyBuyers").textContent = number(avgPoolPerUnitDay);
@@ -674,9 +757,9 @@
       $("platformDailyRevenue").textContent = money(withPlatformPlatformRev / campaignDays);
       $("platformMonthlyRevenue").textContent = money(withPlatformPlatformRev / (safeTotalWeeks / 4.345));
       $("platformCampaignRevenue").textContent = money(withPlatformPlatformRev);
-      $("platformPlusDailyRevenue").textContent = money(plusPlatformRev / campaignDays);
-      $("platformPlusMonthlyRevenue").textContent = money(plusPlatformRev / (safeTotalWeeks / 4.345));
-      $("platformPlusCampaignRevenue").textContent = money(plusPlatformRev);
+      $("plusTutorNetPanel").textContent = money(plusTutorNet);
+      $("plusGainPanel").textContent = money(plusGainVsAsIs);
+      $("plusTutorMonthlyLine").textContent = money(plusTutorNet / (safeTotalWeeks / 4.345));
       $("plusBlendPriceLine").textContent = money(recordingPricePlus);
       $("plusRecordingBuyersLine").textContent = number(plusRecordingFinal);
       $("plusAddonLine").textContent = money(premiumAddonPerUnitDay);
@@ -721,6 +804,73 @@
           recompute();
         });
       });
+
+      const presets = {
+        conservative: {
+          activeBuyers: 220,
+          midSeasonMultiplier: 420,
+          peakSeasonMultiplier: 780,
+          augustPeakBoost: 900,
+          leakageRate: 55,
+          recoveryRate: 35,
+          weekdaySessions: 1.5,
+          weekendSessionsPerDay: 20,
+          fragmentAdoption: 12,
+          fragmentParts: 1200
+        },
+        expected: {
+          activeBuyers: 250,
+          midSeasonMultiplier: 550,
+          peakSeasonMultiplier: 1000,
+          augustPeakBoost: 1000,
+          leakageRate: 60,
+          recoveryRate: 50,
+          weekdaySessions: 2,
+          weekendSessionsPerDay: 30,
+          fragmentAdoption: 20,
+          fragmentParts: 2500
+        },
+        aggressive: {
+          activeBuyers: 300,
+          midSeasonMultiplier: 700,
+          peakSeasonMultiplier: 1200,
+          augustPeakBoost: 1400,
+          leakageRate: 68,
+          recoveryRate: 65,
+          weekdaySessions: 2.5,
+          weekendSessionsPerDay: 40,
+          fragmentAdoption: 30,
+          fragmentParts: 4000
+        }
+      };
+
+      function applyPreset(key) {
+        const preset = presets[key];
+        if (!preset) return;
+        Object.entries(preset).forEach(([id, value]) => {
+          const el = $(id);
+          if (!el) return;
+          el.value = value;
+          const suffixMap = {
+            pricePerRecording: " KES",
+            platformCut: "%",
+            leakageRate: "%",
+            recoveryRate: "%",
+            weekendSessionsPerDay: "%",
+            fragmentAdoption: "%",
+            fragmentParts: " KES",
+            fragmentPartPrice: "%",
+            manualHoursDaily: " hrs",
+            automationEfficiency: "%"
+          };
+          syncDisplay(id, suffixMap[id] || "");
+        });
+        recompute();
+      }
+
+      $("presetConservative").addEventListener("click", () => applyPreset("conservative"));
+      $("presetExpected").addEventListener("click", () => applyPreset("expected"));
+      $("presetAggressive").addEventListener("click", () => applyPreset("aggressive"));
 
       const tabPlatformCore = $("tabPlatformCore");
       const tabPlatformPlus = $("tabPlatformPlus");
