@@ -380,7 +380,6 @@ ju
         <article class="kpi"><p class="label">Recovered Recording Buyers/Day</p><p id="kpiRecoveredBuyers" class="value">-</p></article>
         <article class="kpi"><p class="label">Estimated November Buyers</p><p id="kpiNovBuyers" class="value">-</p></article>
         <article class="kpi"><p class="label">Manual Hours Saved/Month</p><p id="kpiHoursSaved" class="value">-</p></article>
-        <article class="kpi"><p class="label">Platform Revenue (VOD only)</p><p id="kpiPlatformRev" class="value">-</p></article>
       </div>
       <div class="summary-strip">
         <div class="summary-item">
@@ -474,93 +473,93 @@ ju
         <div class="control-group-title">As-Is and Base Platform Inputs (recordings + recovery)</div>
 
         <div class="control">
-          <label for="cohort">Total cohort size <span id="cohortVal" class="val"></span></label>
+          <label for="cohort" title="Total students in the target audience. This caps buyer-related sliders.">Total cohort size <span id="cohortVal" class="val"></span></label>
           <input id="cohort" type="range" min="0" max="5000" value="2600" step="50">
         </div>
 
         <div class="control">
-          <label for="activeBuyers">May buyers per unit/day <span id="activeBuyersVal" class="val"></span></label>
+          <label for="activeBuyers" title="Average paying buyers for one unit-delivery in May. This is the seasonal baseline.">May buyers per unit/day <span id="activeBuyersVal" class="val"></span></label>
           <input id="activeBuyers" type="range" min="0" max="2600" value="250" step="10">
         </div>
 
         <div class="control">
-          <label for="lockBuyersAcrossMonths">Use same buyers value for all months <span id="lockBuyersAcrossMonthsVal" class="val">Off</span></label>
+          <label for="lockBuyersAcrossMonths" title="When on, Jun-Sep, Oct, and Nov buyer values are forced to match May for a flat-demand scenario.">Use same buyers value for all months <span id="lockBuyersAcrossMonthsVal" class="val">Off</span></label>
           <input id="lockBuyersAcrossMonths" type="checkbox">
         </div>
 
         <div class="control">
-          <label for="midSeasonMultiplier">Jun-Sep buyers per unit/day <span id="midSeasonMultiplierVal" class="val"></span></label>
+          <label for="midSeasonMultiplier" title="Average paying buyers per unit-delivery during Jun-Sep.">Jun-Sep buyers per unit/day <span id="midSeasonMultiplierVal" class="val"></span></label>
           <input id="midSeasonMultiplier" type="range" min="0" max="2600" value="550" step="10">
         </div>
 
         <div class="control">
-          <label for="peakSeasonMultiplier">Oct buyers per unit/day <span id="peakSeasonMultiplierVal" class="val"></span></label>
+          <label for="peakSeasonMultiplier" title="Average paying buyers per unit-delivery in October.">Oct buyers per unit/day <span id="peakSeasonMultiplierVal" class="val"></span></label>
           <input id="peakSeasonMultiplier" type="range" min="0" max="2600" value="1000" step="10">
         </div>
 
         <div class="control">
-          <label for="augustPeakBoost">Nov buyers per unit/day (exam peak) <span id="augustPeakBoostVal" class="val"></span></label>
+          <label for="augustPeakBoost" title="Average paying buyers per unit-delivery in November exam period.">Nov buyers per unit/day (exam peak) <span id="augustPeakBoostVal" class="val"></span></label>
           <input id="augustPeakBoost" type="range" min="0" max="2600" value="1000" step="10">
         </div>
 
         <div class="control">
-          <label for="pricePerRecording">Price per recording (KES) <span id="pricePerRecordingVal" class="val"></span></label>
+          <label for="pricePerRecording" title="Selling price per recording transaction in KES.">Price per recording (KES) <span id="pricePerRecordingVal" class="val"></span></label>
           <input id="pricePerRecording" type="range" min="0" max="500" value="100" step="5">
         </div>
 
         <div class="control">
-          <label for="platformCut">Platform cut (%) <span id="platformCutVal" class="val"></span></label>
+          <label for="platformCut" title="Platform share applied to recording/add-on revenue handled on platform.">Platform cut (%) <span id="platformCutVal" class="val"></span></label>
           <input id="platformCut" type="range" min="0" max="100" value="30" step="1">
         </div>
 
         <div class="control">
-          <label for="leakageRate">Of total buyers, those buying recordings (%) <span id="leakageRateVal" class="val"></span></label>
+          <label for="leakageRate" title="Percent of total buyers who purchase recordings rather than only attending live.">Of total buyers, those buying recordings (%) <span id="leakageRateVal" class="val"></span></label>
           <input id="leakageRate" type="range" min="0" max="100" value="60" step="1">
         </div>
 
         <div class="control">
-          <label for="recoveryRate">Recovery rate of destroyed transactions (%) <span id="recoveryRateVal" class="val"></span></label>
+          <label for="recoveryRate" title="Share of lost would-have-paid viewers converted back into paying buyers via access control.">Recovery rate of destroyed transactions (%) <span id="recoveryRateVal" class="val"></span></label>
           <input id="recoveryRate" type="range" min="0" max="100" value="50" step="1">
         </div>
 
         <div class="control">
-          <label for="weekdaySessions">Would-have-been viewers per recording buyer <span id="weekdaySessionsVal" class="val"></span></label>
+          <label for="weekdaySessions" title="Estimated additional viewers each recording buyer shares with who would otherwise have paid.">Would-have-been viewers per recording buyer <span id="weekdaySessionsVal" class="val"></span></label>
           <input id="weekdaySessions" type="range" min="0" max="4" value="2" step="0.1">
         </div>
 
         <div class="control-group-title">Recommendations Inputs (client revenue maximization)</div>
         <div class="control">
-          <label for="recommendationsEnabled">Enable client maximization recommendations <span id="recommendationsEnabledVal" class="val">Off</span></label>
+          <label for="recommendationsEnabled" title="Turns recommendation effects on/off. When off, recommendation sliders do not affect math.">Enable client maximization recommendations <span id="recommendationsEnabledVal" class="val">Off</span></label>
           <input id="recommendationsEnabled" type="checkbox">
         </div>
 
         <div class="control recommendation-control">
-          <label for="weekendSessionsPerDay">Fragmentation blended recording price uplift (%) <span id="weekendSessionsPerDayVal" class="val"></span></label>
+          <label for="weekendSessionsPerDay" title="Percent price uplift from splitting long recordings into structured smaller paid parts.">Fragmentation blended recording price uplift (%) <span id="weekendSessionsPerDayVal" class="val"></span></label>
           <input id="weekendSessionsPerDay" type="range" min="0" max="100" value="30" step="1">
         </div>
 
         <div class="control recommendation-control">
-          <label for="fragmentAdoption">Syllabus/repeatability recording demand uplift (%) <span id="fragmentAdoptionVal" class="val"></span></label>
+          <label for="fragmentAdoption" title="Demand lift from syllabus-tagged clips and repeatability for quick topic revision.">Syllabus/repeatability recording demand uplift (%) <span id="fragmentAdoptionVal" class="val"></span></label>
           <input id="fragmentAdoption" type="range" min="0" max="100" value="20" step="1">
         </div>
 
         <div class="control recommendation-control">
-          <label for="fragmentParts">Urgency + Q&A add-on GMV per unit/day (KES) <span id="fragmentPartsVal" class="val"></span></label>
+          <label for="fragmentParts" title="Extra daily GMV per unit-delivery from urgency products and paid Q&A style add-ons.">Urgency + Q&A add-on GMV per unit/day (KES) <span id="fragmentPartsVal" class="val"></span></label>
           <input id="fragmentParts" type="range" min="0" max="10000" value="2500" step="100">
         </div>
 
         <div class="control recommendation-control">
-          <label for="fragmentPartPrice">Recording share under platform plus (%) <span id="fragmentPartPriceVal" class="val"></span></label>
+          <label for="fragmentPartPrice" title="Recording share used in recommendations scenario after product improvements and packaging changes.">Recording share under platform plus (%) <span id="fragmentPartPriceVal" class="val"></span></label>
           <input id="fragmentPartPrice" type="range" min="0" max="100" value="60" step="1">
         </div>
 
         <div class="control">
-          <label for="manualHoursDaily">Current manual admin hours/day <span id="manualHoursDailyVal" class="val"></span></label>
+          <label for="manualHoursDaily" title="Current daily time spent on manual payment checks and access handling.">Current manual admin hours/day <span id="manualHoursDailyVal" class="val"></span></label>
           <input id="manualHoursDaily" type="range" min="0" max="16" value="4.5" step="0.5">
         </div>
 
         <div class="control">
-          <label for="automationEfficiency">Automation efficiency (%) <span id="automationEfficiencyVal" class="val"></span></label>
+          <label for="automationEfficiency" title="Portion of manual workload expected to be eliminated through automation.">Automation efficiency (%) <span id="automationEfficiencyVal" class="val"></span></label>
           <input id="automationEfficiency" type="range" min="0" max="100" value="82" step="1">
         </div>
       </article>
@@ -584,12 +583,12 @@ ju
         <div id="panelPlatformCore" class="tab-panel">
           <div class="results">
             <p><span>Platform take rate</span><strong id="platformCutLine">-</strong></p>
-            <p><span>Recording GMV (weekly check)</span><strong id="recordingWeeklyGrossCheck">-</strong></p>
-            <p><span>Recording GMV (4-week month check)</span><strong id="recordingMonthlyGrossCheck">-</strong></p>
+            <p><span>Recording GMV (weekly, before cut)</span><strong id="recordingWeeklyGrossCheck">-</strong></p>
+            <p><span>Recording GMV (4-week month, before cut)</span><strong id="recordingMonthlyGrossCheck">-</strong></p>
             <p><span>Equation check</span><strong id="recordingEquationLine">-</strong></p>
-            <p><span>With Platform (recordings) May-Nov</span><strong id="platformCampaignRevenue">-</strong></p>
-            <p><span>Avg monthly (recordings)</span><strong id="platformMonthlyRevenue">-</strong></p>
-            <p><span>Daily average (recordings)</span><strong id="platformDailyRevenue">-</strong></p>
+            <p><span>Platform kept revenue May-Nov</span><strong id="platformCampaignRevenue">-</strong></p>
+            <p><span>Platform kept revenue (4-week month avg)</span><strong id="platformMonthlyRevenue">-</strong></p>
+            <p><span>Platform kept revenue (daily avg)</span><strong id="platformDailyRevenue">-</strong></p>
             <p><span>Math consistency</span><strong id="mathConsistencyLine">-</strong></p>
             <p><span>Revenue basis</span><strong>Recordings only (live excluded)</strong></p>
             <p><span>Unit schedule</span><strong>9 unit-deliveries/week</strong></p>
@@ -763,7 +762,6 @@ ju
       $("kpiRecoveredBuyers").textContent = number(recoveredTransactions);
       $("kpiNovBuyers").textContent = number(novBuyersEstimated);
       $("kpiHoursSaved").textContent = number(monthlyHoursSaved);
-      $("kpiPlatformRev").textContent = money(withPlatformPlatformRev);
       $("summaryUplift").textContent = money(plusGainVsAsIs);
       $("summaryHours").textContent = `${number(monthlyHoursSaved)} hrs/month`;
 
