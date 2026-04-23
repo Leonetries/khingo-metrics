@@ -138,6 +138,9 @@
       font-weight: 700;
       letter-spacing: 0.01em;
     }
+    .recommendations-disabled {
+      opacity: 0.5;
+    }
     .control label {
       display: flex;
       justify-content: space-between;
@@ -418,15 +421,6 @@ ju
           </div>
         </div>
       </div>
-      <div class="assumptions-strip">
-        <h3>Client math audit (live)</h3>
-        <div class="results">
-          <p><span>As-Is monthly formula check</span><strong id="clientAsIsMathLine">-</strong></p>
-          <p><span>With Platform monthly formula check</span><strong id="clientPlatformMathLine">-</strong></p>
-          <p><span>Recommendations monthly formula check</span><strong id="clientPlusMathLine">-</strong></p>
-          <p><span>Client consistency status</span><strong id="clientMathConsistency">-</strong></p>
-        </div>
-      </div>
 
       <div class="compare-grid">
         <article class="compare-card">
@@ -490,6 +484,11 @@ ju
         </div>
 
         <div class="control">
+          <label for="lockBuyersAcrossMonths">Use same buyers value for all months <span id="lockBuyersAcrossMonthsVal" class="val">Off</span></label>
+          <input id="lockBuyersAcrossMonths" type="checkbox">
+        </div>
+
+        <div class="control">
           <label for="midSeasonMultiplier">Jun-Sep buyers per unit/day <span id="midSeasonMultiplierVal" class="val"></span></label>
           <input id="midSeasonMultiplier" type="range" min="0" max="2600" value="550" step="10">
         </div>
@@ -530,23 +529,27 @@ ju
         </div>
 
         <div class="control-group-title">Recommendations Inputs (client revenue maximization)</div>
-
         <div class="control">
+          <label for="recommendationsEnabled">Enable client maximization recommendations <span id="recommendationsEnabledVal" class="val">Off</span></label>
+          <input id="recommendationsEnabled" type="checkbox">
+        </div>
+
+        <div class="control recommendation-control">
           <label for="weekendSessionsPerDay">Fragmentation blended recording price uplift (%) <span id="weekendSessionsPerDayVal" class="val"></span></label>
           <input id="weekendSessionsPerDay" type="range" min="0" max="100" value="30" step="1">
         </div>
 
-        <div class="control">
+        <div class="control recommendation-control">
           <label for="fragmentAdoption">Syllabus/repeatability recording demand uplift (%) <span id="fragmentAdoptionVal" class="val"></span></label>
           <input id="fragmentAdoption" type="range" min="0" max="100" value="20" step="1">
         </div>
 
-        <div class="control">
+        <div class="control recommendation-control">
           <label for="fragmentParts">Urgency + Q&A add-on GMV per unit/day (KES) <span id="fragmentPartsVal" class="val"></span></label>
           <input id="fragmentParts" type="range" min="0" max="10000" value="2500" step="100">
         </div>
 
-        <div class="control">
+        <div class="control recommendation-control">
           <label for="fragmentPartPrice">Recording share under platform plus (%) <span id="fragmentPartPriceVal" class="val"></span></label>
           <input id="fragmentPartPrice" type="range" min="0" max="100" value="60" step="1">
         </div>
@@ -666,6 +669,7 @@ ju
       if (+$("augustPeakBoost").value > cohort) $("augustPeakBoost").value = cohort;
 
       const mayBuyers = +$("activeBuyers").value;
+      const lockBuyersAcrossMonths = $("lockBuyersAcrossMonths").checked;
       const midSeasonMultiplier = +$("midSeasonMultiplier").value;
       const peakSeasonMultiplier = +$("peakSeasonMultiplier").value;
       const augustPeakBoost = +$("augustPeakBoost").value;
@@ -674,10 +678,11 @@ ju
       const recordingShare = clampPct(+$("leakageRate").value);
       const recoveredAudienceRate = clampPct(+$("recoveryRate").value);
       const wouldHavePaidPerRecordingBuyer = +$("weekdaySessions").value;
-      const recordingPriceUplift = clampPct(+$("weekendSessionsPerDay").value);
-      const repeatabilityUplift = clampPct(+$("fragmentAdoption").value);
-      const premiumAddonPerUnitDay = +$("fragmentParts").value;
-      const plusRecordingShare = clampPct(+$("fragmentPartPrice").value);
+      const recommendationsEnabled = $("recommendationsEnabled").checked;
+      const recordingPriceUplift = recommendationsEnabled ? clampPct(+$("weekendSessionsPerDay").value) : 0;
+      const repeatabilityUplift = recommendationsEnabled ? clampPct(+$("fragmentAdoption").value) : 0;
+      const premiumAddonPerUnitDay = recommendationsEnabled ? +$("fragmentParts").value : 0;
+      const plusRecordingShare = recommendationsEnabled ? clampPct(+$("fragmentPartPrice").value) : recordingShare;
       const mayWeeks = 8;
       const midWeeks = 12;
       const peakWeeks = 10;
@@ -690,9 +695,9 @@ ju
       const campaignDays = safeTotalWeeks * 7;
 
       const mayPool = Math.min(mayBuyers, cohort);
-      const midPool = Math.min(midSeasonMultiplier, cohort);
-      const octPool = Math.min(peakSeasonMultiplier, cohort);
-      const novPool = Math.min(augustPeakBoost, cohort);
+      const midPool = lockBuyersAcrossMonths ? mayPool : Math.min(midSeasonMultiplier, cohort);
+      const octPool = lockBuyersAcrossMonths ? mayPool : Math.min(peakSeasonMultiplier, cohort);
+      const novPool = lockBuyersAcrossMonths ? mayPool : Math.min(augustPeakBoost, cohort);
 
       const peakHalfWeeks = peakWeeks / 2;
       const weightedPoolSum =
@@ -704,7 +709,6 @@ ju
       const avgPoolPerUnitDay = weightedPoolSum / safeTotalWeeks;
       const asIsWeeklyGmv = avgPoolPerUnitDay * price * unitDaysPerWeek;
       const asIsMayNovNet = asIsWeeklyGmv * safeTotalWeeks;
-      const asIsMonthlyCheck = asIsWeeklyGmv * 4;
 
       const avgRecordingBuyersAsIs = avgPoolPerUnitDay * recordingShare;
       const avgLiveBuyers = avgPoolPerUnitDay - avgRecordingBuyersAsIs;
@@ -721,7 +725,6 @@ ju
       const withPlatformRecordingGrossWeek = withPlatformRecordingGrossUnitDay * unitDaysPerWeek;
       const withPlatformTutorNet = withPlatformTutorUnitDay * unitDaysPerWeek * safeTotalWeeks;
       const withPlatformPlatformRev = withPlatformPlatformUnitDay * unitDaysPerWeek * safeTotalWeeks;
-      const withPlatformTutorMonthlyCheck = withPlatformTutorUnitDay * unitDaysPerWeek * 4;
 
       const plusRecordingBase = withPlatformTotalBuyers * plusRecordingShare;
       const plusLiveBase = Math.max(withPlatformTotalBuyers - plusRecordingBase, 0);
@@ -746,7 +749,6 @@ ju
         (premiumAddonPerUnitDay * platformCut);
       const plusTutorNet = plusTutorUnitDay * unitDaysPerWeek * safeTotalWeeks;
       const plusPlatformRev = plusPlatformUnitDay * unitDaysPerWeek * safeTotalWeeks;
-      const plusTutorMonthlyCheck = plusTutorUnitDay * unitDaysPerWeek * 4;
 
       const monthlyHoursSaved = manualHoursDaily * automationEfficiency * 30;
       const tutorGainVsAsIs = withPlatformTutorNet - asIsMayNovNet;
@@ -785,23 +787,6 @@ ju
       $("assumptionDestroyedRate").textContent = number(wouldHavePaidPerRecordingBuyer);
       $("assumptionRecoveredRate").textContent = pct(recoveredAudienceRate);
 
-      const shownAsIsMonthly = (asIsMayNovNet / safeTotalWeeks) * 4;
-      const shownPlatformMonthly = (withPlatformTutorNet / safeTotalWeeks) * 4;
-      const shownPlusMonthly = (plusTutorNet / safeTotalWeeks) * 4;
-      const asIsDelta = Math.abs(asIsMonthlyCheck - shownAsIsMonthly);
-      const platformDelta = Math.abs(withPlatformTutorMonthlyCheck - shownPlatformMonthly);
-      const plusDelta = Math.abs(plusTutorMonthlyCheck - shownPlusMonthly);
-      const totalClientDelta = asIsDelta + platformDelta + plusDelta;
-
-      $("clientAsIsMathLine").textContent =
-        `${number(avgPoolPerUnitDay)} x ${number(price)} x 9 x 4 = ${money(asIsMonthlyCheck)}`;
-      $("clientPlatformMathLine").textContent =
-        `[(Live x Price) + (Recording x Price x (1-cut))] x 9 x 4 = ${money(withPlatformTutorMonthlyCheck)}`;
-      $("clientPlusMathLine").textContent =
-        `[(Live x Price) + (Rec x Blend x (1-cut)) + (Add-ons x (1-cut))] x 9 x 4 = ${money(plusTutorMonthlyCheck)}`;
-      $("clientMathConsistency").textContent =
-        totalClientDelta < 1 ? "OK" : `Check delta: ${money(totalClientDelta)}`;
-
       $("platformCutLine").textContent = pct(platformCut);
       $("recordingWeeklyGrossCheck").textContent = money(withPlatformRecordingGrossWeek);
       $("recordingMonthlyGrossCheck").textContent = money(withPlatformRecordingGrossWeek * 4);
@@ -820,6 +805,8 @@ ju
       $("plusBlendPriceLine").textContent = money(recordingPricePlus);
       $("plusRecordingBuyersLine").textContent = number(plusRecordingFinal);
       $("plusAddonLine").textContent = money(premiumAddonPerUnitDay);
+      $("recommendationsEnabledVal").textContent = recommendationsEnabled ? "On" : "Off";
+      $("lockBuyersAcrossMonthsVal").textContent = lockBuyersAcrossMonths ? "On" : "Off";
     }
 
     function bindControls() {
@@ -828,6 +815,7 @@ ju
       syncDisplay("midSeasonMultiplier");
       syncDisplay("peakSeasonMultiplier");
       syncDisplay("augustPeakBoost");
+      $("lockBuyersAcrossMonthsVal").textContent = $("lockBuyersAcrossMonths").checked ? "On" : "Off";
       syncDisplay("pricePerRecording", " KES");
       syncDisplay("platformCut", "%");
       syncDisplay("leakageRate", "%");
@@ -839,6 +827,32 @@ ju
       syncDisplay("fragmentPartPrice", "%");
       syncDisplay("manualHoursDaily", " hrs");
       syncDisplay("automationEfficiency", "%");
+
+      const recommendationIds = ["weekendSessionsPerDay", "fragmentAdoption", "fragmentParts", "fragmentPartPrice"];
+      const recommendationControls = document.querySelectorAll(".recommendation-control");
+      const monthDemandIds = ["midSeasonMultiplier", "peakSeasonMultiplier", "augustPeakBoost"];
+      function syncRecommendationState() {
+        const enabled = $("recommendationsEnabled").checked;
+        recommendationIds.forEach((id) => {
+          $(id).disabled = !enabled;
+        });
+        recommendationControls.forEach((el) => {
+          if (enabled) {
+            el.classList.remove("recommendations-disabled");
+          } else {
+            el.classList.add("recommendations-disabled");
+          }
+        });
+        $("recommendationsEnabledVal").textContent = enabled ? "On" : "Off";
+      }
+
+      function syncMonthLockState() {
+        const locked = $("lockBuyersAcrossMonths").checked;
+        monthDemandIds.forEach((id) => {
+          $(id).disabled = locked;
+        });
+        $("lockBuyersAcrossMonthsVal").textContent = locked ? "On" : "Off";
+      }
 
       ids.forEach((id) => {
         $(id).addEventListener("input", () => {
@@ -860,6 +874,14 @@ ju
           syncDisplay(id, suffixMap[id] || "");
           recompute();
         });
+      });
+      $("lockBuyersAcrossMonths").addEventListener("change", () => {
+        syncMonthLockState();
+        recompute();
+      });
+      $("recommendationsEnabled").addEventListener("change", () => {
+        syncRecommendationState();
+        recompute();
       });
 
       const presets = {
@@ -928,6 +950,8 @@ ju
       $("presetConservative").addEventListener("click", () => applyPreset("conservative"));
       $("presetExpected").addEventListener("click", () => applyPreset("expected"));
       $("presetAggressive").addEventListener("click", () => applyPreset("aggressive"));
+      syncRecommendationState();
+      syncMonthLockState();
 
       const tabPlatformCore = $("tabPlatformCore");
       const tabPlatformPlus = $("tabPlatformPlus");
