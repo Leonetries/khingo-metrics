@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Khingo Revenue Protection Pitch</title>
+  <title>Khingo Revenue Model</title>
   <style>
     :root {
       --khingo-bg: #050505;
-      --khingo-card: rgba(26, 26, 26, 0.72);
-      --khingo-card-soft: rgba(18, 18, 18, 0.62);
+      --khingo-card: rgba(28, 34, 30, 0.5);
+      --khingo-card-soft: rgba(15, 20, 17, 0.56);
       --khingo-text: #f5f6f9;
       --khingo-muted: #b7bac5;
-      --khingo-border: rgba(255, 255, 255, 0.12);
-      --khingo-accent: #beff00;
-      --khingo-accent-soft: rgba(190, 255, 0, 0.2);
-      --khingo-glow: 0 0 24px rgba(190, 255, 0, 0.22);
+      --khingo-border: rgba(230, 242, 230, 0.16);
+      --khingo-accent: #a9cf72;
+      --khingo-accent-soft: rgba(169, 207, 114, 0.24);
+      --khingo-glow: 0 0 26px rgba(169, 207, 114, 0.18);
       --khingo-success: #00c833;
     }
 
@@ -25,9 +25,9 @@
       color: var(--khingo-text);
       background-color: var(--khingo-bg);
       background-image:
-        radial-gradient(circle at top left, rgba(190, 255, 0, 0.08), transparent 30%),
-        radial-gradient(circle at top right, rgba(255, 255, 255, 0.05), transparent 24%),
-        radial-gradient(circle at bottom right, rgba(190, 255, 0, 0.06), transparent 26%);
+        radial-gradient(circle at top left, rgba(169, 207, 114, 0.11), transparent 32%),
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.06), transparent 24%),
+        radial-gradient(circle at bottom right, rgba(125, 165, 96, 0.08), transparent 30%);
     }
 
     .wrap {
@@ -37,13 +37,18 @@
     }
 
     .hero {
-      background: linear-gradient(140deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+      background:
+        linear-gradient(140deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03)),
+        linear-gradient(220deg, rgba(169, 207, 114, 0.09), rgba(0, 0, 0, 0));
       border: 1px solid var(--khingo-border);
       color: var(--khingo-text);
       border-radius: 20px;
       padding: 24px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(18px) saturate(115%);
+      -webkit-backdrop-filter: blur(18px) saturate(115%);
+      box-shadow:
+        0 24px 50px rgba(0, 0, 0, 0.42),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
     }
 
     .hero h1 { margin: 0 0 8px; font-size: 1.72rem; letter-spacing: -0.02em; }
@@ -57,11 +62,14 @@
     }
 
     .kpi {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.02)),
+        linear-gradient(130deg, rgba(169, 207, 114, 0.05), rgba(0, 0, 0, 0));
       border: 1px solid var(--khingo-border);
       border-radius: 14px;
       padding: 14px;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(14px) saturate(115%);
+      -webkit-backdrop-filter: blur(14px) saturate(115%);
       transition: transform 180ms ease, box-shadow 180ms ease;
     }
 
@@ -97,8 +105,11 @@
       border: 1px solid var(--khingo-border);
       border-radius: 18px;
       padding: 16px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(18px) saturate(115%);
+      -webkit-backdrop-filter: blur(18px) saturate(115%);
+      box-shadow:
+        0 24px 44px rgba(0, 0, 0, 0.34),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
     }
 
     .panel h2 {
@@ -144,16 +155,6 @@
     }
 
     .results strong { color: var(--khingo-accent); font-variant-numeric: tabular-nums; }
-    .note {
-      margin-top: 14px;
-      padding: 12px;
-      border-radius: 10px;
-      background: rgba(0, 200, 51, 0.08);
-      border: 1px solid rgba(0, 200, 51, 0.25);
-      color: #c9ffd8;
-      font-weight: 600;
-    }
-
     .mini {
       margin-top: 16px;
       display: grid;
@@ -169,35 +170,146 @@
       font-size: 0.9rem;
       line-height: 1.45;
       color: var(--khingo-muted);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
     }
 
     .card strong {
       color: var(--khingo-text);
     }
 
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .tab-btn {
+      border: 1px solid var(--khingo-border);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--khingo-muted);
+      border-radius: 999px;
+      padding: 7px 12px;
+      cursor: pointer;
+      font-weight: 600;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .tab-btn.active {
+      color: #182010;
+      background: var(--khingo-accent);
+      border-color: var(--khingo-accent);
+      box-shadow: var(--khingo-glow);
+    }
+
+    .tab-panel.hidden {
+      display: none;
+    }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .assumptions-strip {
+      border: 1px solid var(--khingo-border);
+      background:
+        linear-gradient(160deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+        rgba(255, 255, 255, 0.015);
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 10px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .assumptions-strip h3 {
+      margin: 0 0 6px;
+      font-size: 0.9rem;
+      color: var(--khingo-text);
+    }
+
+    .assumption-items {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .assumption-pill {
+      border: 1px solid var(--khingo-border);
+      border-radius: 10px;
+      padding: 7px 8px;
+      background: rgba(255, 255, 255, 0.02);
+      font-size: 0.82rem;
+      color: var(--khingo-muted);
+      line-height: 1.35;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .assumption-pill strong {
+      color: var(--khingo-accent);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .compare-card {
+      border: 1px solid var(--khingo-border);
+      background:
+        linear-gradient(150deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+        rgba(255, 255, 255, 0.015);
+      border-radius: 12px;
+      padding: 10px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .compare-card h3 {
+      margin: 0 0 6px;
+      font-size: 0.92rem;
+      color: var(--khingo-text);
+    }
+
+    .compare-card p {
+      margin: 6px 0;
+      font-size: 0.86rem;
+      color: var(--khingo-muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .compare-card strong {
+      color: var(--khingo-accent);
+      font-variant-numeric: tabular-nums;
+    }
+
     @media (max-width: 950px) {
       .layout { grid-template-columns: 1fr; }
       .mini { grid-template-columns: 1fr; }
+      .compare-grid { grid-template-columns: 1fr; }
+      .assumption-items { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
     <section class="hero">
-      <h1>Khingo Studio Revenue Protection Model</h1>
+      <h1>Khingo Revenue Model</h1>
       <p>
-        Live scenario simulator for stopping revenue leakage, reducing manual workload, and increasing
-        tutor earnings through controlled access and smarter content packaging.
+        Parameter adjustments for an accurate portrayal of switching to Khingo, comparing current
+        recording distribution against controlled-access VOD and an expanded recommendation strategy.
       </p>
       <div class="kpi-grid">
-        <article class="kpi"><p class="label">Daily Net (KES)</p><p id="kpiDaily" class="value">-</p></article>
-        <article class="kpi"><p class="label">Monthly Net (KES)</p><p id="kpiMonthly" class="value">-</p></article>
-        <article class="kpi"><p class="label">May-Nov Net (KES)</p><p id="kpiAnnual" class="value">-</p></article>
-        <article class="kpi"><p class="label">Leakage Recovered (KES/Month)</p><p id="kpiLeakageStopped" class="value">-</p></article>
-        <article class="kpi"><p class="label">Revenue Retention Gain</p><p id="kpiRetentionGain" class="value">-</p></article>
-        <article class="kpi"><p class="label">Estimated November Buyers</p><p id="kpiAugustBuyers" class="value">-</p></article>
+        <article class="kpi"><p class="label">As-Is May-Nov Net</p><p id="kpiAsIs" class="value">-</p></article>
+        <article class="kpi"><p class="label">With Platform May-Nov Net</p><p id="kpiWithPlatform" class="value">-</p></article>
+        <article class="kpi"><p class="label">Platform Plus May-Nov Net</p><p id="kpiPlus" class="value">-</p></article>
+        <article class="kpi"><p class="label">Tutor Gain vs As-Is</p><p id="kpiGain" class="value">-</p></article>
+        <article class="kpi"><p class="label">Recovered Recording Buyers/Day</p><p id="kpiRecoveredBuyers" class="value">-</p></article>
+        <article class="kpi"><p class="label">Estimated November Buyers</p><p id="kpiNovBuyers" class="value">-</p></article>
         <article class="kpi"><p class="label">Manual Hours Saved/Month</p><p id="kpiHoursSaved" class="value">-</p></article>
-        <article class="kpi"><p class="label">Net Uplift vs Current</p><p id="kpiUplift" class="value">-</p></article>
+        <article class="kpi"><p class="label">Platform Revenue (VOD only)</p><p id="kpiPlatformRev" class="value">-</p></article>
       </div>
     </section>
 
@@ -206,18 +318,33 @@
         <h2>Adjustable Assumptions</h2>
 
         <div class="control">
-          <label for="cohort">Total cohort <span id="cohortVal" class="val"></span></label>
+          <label for="cohort">Total cohort size <span id="cohortVal" class="val"></span></label>
           <input id="cohort" type="range" min="0" max="5000" value="2600" step="50">
         </div>
 
         <div class="control">
-          <label for="activeBuyers">Active purchasing students <span id="activeBuyersVal" class="val"></span></label>
-          <input id="activeBuyers" type="range" min="0" max="2600" value="1600" step="10">
+          <label for="activeBuyers">May paying transactions per unit/day <span id="activeBuyersVal" class="val"></span></label>
+          <input id="activeBuyers" type="range" min="0" max="2600" value="250" step="10">
         </div>
 
         <div class="control">
-          <label for="augustPeakBoost">November peak boost on buyers (%) <span id="augustPeakBoostVal" class="val"></span></label>
-          <input id="augustPeakBoost" type="range" min="0" max="120" value="45" step="1">
+          <label for="midSeasonMultiplier">Jun-Sep demand multiplier <span id="midSeasonMultiplierVal" class="val"></span></label>
+          <input id="midSeasonMultiplier" type="range" min="0" max="4" value="2.2" step="0.05">
+        </div>
+
+        <div class="control">
+          <label for="peakSeasonMultiplier">Oct baseline multiplier <span id="peakSeasonMultiplierVal" class="val"></span></label>
+          <input id="peakSeasonMultiplier" type="range" min="0" max="5" value="4" step="0.05">
+        </div>
+
+        <div class="control">
+          <label for="augustPeakBoost">November exam peak boost (%) <span id="augustPeakBoostVal" class="val"></span></label>
+          <input id="augustPeakBoost" type="range" min="0" max="120" value="0" step="1">
+        </div>
+
+        <div class="control">
+          <label for="novemberBuyerCap">November buyer cap <span id="novemberBuyerCapVal" class="val"></span></label>
+          <input id="novemberBuyerCap" type="range" min="0" max="2600" value="1000" step="10">
         </div>
 
         <div class="control">
@@ -227,57 +354,42 @@
 
         <div class="control">
           <label for="platformCut">Platform cut (%) <span id="platformCutVal" class="val"></span></label>
-          <input id="platformCut" type="range" min="0" max="100" value="22" step="1">
+          <input id="platformCut" type="range" min="0" max="100" value="30" step="1">
         </div>
 
         <div class="control">
-          <label for="leakageRate">Revenue leakage from sharing (%) <span id="leakageRateVal" class="val"></span></label>
-          <input id="leakageRate" type="range" min="0" max="100" value="48" step="1">
+          <label for="leakageRate">Recording share of buyers (%) <span id="leakageRateVal" class="val"></span></label>
+          <input id="leakageRate" type="range" min="0" max="100" value="60" step="1">
         </div>
 
         <div class="control">
-          <label for="recoveryRate">Leakage recovery with platform (%) <span id="recoveryRateVal" class="val"></span></label>
-          <input id="recoveryRate" type="range" min="0" max="100" value="88" step="1">
+          <label for="recoveryRate">Recovered would-have-paid viewers (%) <span id="recoveryRateVal" class="val"></span></label>
+          <input id="recoveryRate" type="range" min="0" max="100" value="50" step="1">
         </div>
 
         <div class="control">
-          <label for="weekdaySessions">Weekday live sessions/day <span id="weekdaySessionsVal" class="val"></span></label>
-          <input id="weekdaySessions" type="range" min="0" max="5" value="1" step="1">
+          <label for="weekdaySessions">Would-have-paid viewers per recording buyer <span id="weekdaySessionsVal" class="val"></span></label>
+          <input id="weekdaySessions" type="range" min="0" max="4" value="2" step="0.1">
         </div>
 
         <div class="control">
-          <label for="weekendSessionsPerDay">Weekend live sessions/day <span id="weekendSessionsPerDayVal" class="val"></span></label>
-          <input id="weekendSessionsPerDay" type="range" min="0" max="5" value="2" step="1">
+          <label for="weekendSessionsPerDay">Fragmentation blended recording price uplift (%) <span id="weekendSessionsPerDayVal" class="val"></span></label>
+          <input id="weekendSessionsPerDay" type="range" min="0" max="100" value="30" step="1">
         </div>
 
         <div class="control">
-          <label for="fragmentAdoption">Fragmented-content adoption (%) <span id="fragmentAdoptionVal" class="val"></span></label>
-          <input id="fragmentAdoption" type="range" min="0" max="100" value="58" step="1">
+          <label for="fragmentAdoption">Syllabus/repeatability recording demand uplift (%) <span id="fragmentAdoptionVal" class="val"></span></label>
+          <input id="fragmentAdoption" type="range" min="0" max="100" value="20" step="1">
         </div>
 
         <div class="control">
-          <label for="fragmentParts">Parts per full recording <span id="fragmentPartsVal" class="val"></span></label>
-          <input id="fragmentParts" type="range" min="0" max="5" value="3" step="1">
+          <label for="fragmentParts">Urgency + Q&A add-on GMV per unit/day (KES) <span id="fragmentPartsVal" class="val"></span></label>
+          <input id="fragmentParts" type="range" min="0" max="10000" value="2500" step="100">
         </div>
 
         <div class="control">
-          <label for="fragmentPartPrice">Price per part (KES) <span id="fragmentPartPriceVal" class="val"></span></label>
-          <input id="fragmentPartPrice" type="range" min="0" max="300" value="50" step="5">
-        </div>
-
-        <div class="control">
-          <label for="urgencyAdoption">Urgency content adoption (%) <span id="urgencyAdoptionVal" class="val"></span></label>
-          <input id="urgencyAdoption" type="range" min="0" max="100" value="42" step="1">
-        </div>
-
-        <div class="control">
-          <label for="urgencyPrice">Urgency content price (KES/item) <span id="urgencyPriceVal" class="val"></span></label>
-          <input id="urgencyPrice" type="range" min="0" max="500" value="180" step="5">
-        </div>
-
-        <div class="control">
-          <label for="urgencyItemsWeekly">Urgency items weekly <span id="urgencyItemsWeeklyVal" class="val"></span></label>
-          <input id="urgencyItemsWeekly" type="range" min="0" max="14" value="3" step="1">
+          <label for="fragmentPartPrice">Recording share under platform plus (%) <span id="fragmentPartPriceVal" class="val"></span></label>
+          <input id="fragmentPartPrice" type="range" min="0" max="100" value="60" step="1">
         </div>
 
         <div class="control">
@@ -292,34 +404,82 @@
       </article>
 
       <article class="panel">
-        <h2>Current vs With Khingo</h2>
-        <div class="results">
-          <p><span>Current daily net (after leakage)</span><strong id="currentDaily">-</strong></p>
-          <p><span>With platform daily net (after cut)</span><strong id="withPlatformDaily">-</strong></p>
-          <p><span>Current revenue retention</span><strong id="currentRetention">-</strong></p>
-          <p><span>Projected revenue retention</span><strong id="projectedRetention">-</strong></p>
-          <p><span>Estimated November buyers</span><strong id="augustBuyersLine">-</strong></p>
-          <p><span>Daily uplift</span><strong id="dailyUplift">-</strong></p>
-          <p><span>Monthly uplift</span><strong id="monthlyUplift">-</strong></p>
-          <p><span>May-Nov uplift</span><strong id="annualUplift">-</strong></p>
-          <p><span>Recovered leakage/month (net)</span><strong id="leakageRecoveredMonthly">-</strong></p>
-          <p><span>Fragmentation uplift/month</span><strong id="fragmentUpliftMonthly">-</strong></p>
-          <p><span>Urgency content uplift/month</span><strong id="urgencyUpliftMonthly">-</strong></p>
-          <p><span>Manual hours saved/month</span><strong id="hoursSavedMonthly">-</strong></p>
+        <h2>Revenue Views (VOD only)</h2>
+        <div class="tabs">
+          <button id="tabClient" class="tab-btn active" type="button">Client Impact</button>
+          <button id="tabPlatform" class="tab-btn" type="button">Platform Revenue</button>
         </div>
 
-        <div class="note" id="pitchLine"></div>
-
-        <div class="mini">
-          <div class="card">
-            <strong>Why this helps immediately</strong><br>
-            Link sharing loses income every day. Controlled access and expiry restore missed revenue
-            while reducing admin effort from manual payment confirmation.
+        <div id="panelClient" class="tab-panel">
+          <div class="assumptions-strip">
+            <h3>Scenario assumptions at a glance</h3>
+            <div class="assumption-items">
+              <div class="assumption-pill">
+                <span>Seasonal pool path</span><br>
+                <strong id="assumptionPath">-</strong>
+              </div>
+              <div class="assumption-pill">
+                <span>Recording buyers share</span><br>
+                <strong id="assumptionRecordingShare">-</strong>
+              </div>
+              <div class="assumption-pill">
+                <span>Destroyed buyers per recording buyer</span><br>
+                <strong id="assumptionDestroyedRate">-</strong>
+              </div>
+              <div class="assumption-pill">
+                <span>Recovered destroyed buyers</span><br>
+                <strong id="assumptionRecoveredRate">-</strong>
+              </div>
+            </div>
           </div>
-          <div class="card">
-            <strong>Long-term growth play</strong><br>
-            Structured syllabus playlists, fragmented lessons, and premium urgency content create
-            recurring purchasing behavior instead of one-off access sharing.
+
+          <div class="compare-grid">
+            <article class="compare-card">
+              <h3>Platform Plus Recommendations</h3>
+              <p><span>May-Nov tutor net</span><strong id="plusTutorNet">-</strong></p>
+              <p><span>Avg daily buyers</span><strong id="plusDailyBuyers">-</strong></p>
+              <p><span>Recording price (blended)</span><strong id="plusRecordingPrice">-</strong></p>
+              <p><span>Gain vs As-Is</span><strong id="plusGain">-</strong></p>
+            </article>
+            <article class="compare-card">
+              <h3>With Platform (Recordings)</h3>
+              <p><span>May-Nov tutor net</span><strong id="platformTutorNet">-</strong></p>
+              <p><span>Avg daily buyers</span><strong id="platformDailyBuyers">-</strong></p>
+              <p><span>Recovered buyers/day</span><strong id="platformRecoveredBuyers">-</strong></p>
+              <p><span>Gain vs As-Is</span><strong id="platformGain">-</strong></p>
+            </article>
+            <article class="compare-card">
+              <h3>As Currently Is</h3>
+              <p><span>May-Nov net</span><strong id="asIsNet">-</strong></p>
+              <p><span>Avg daily buyers</span><strong id="asIsDailyBuyers">-</strong></p>
+              <p><span>Nov buyers</span><strong id="asIsNovBuyers">-</strong></p>
+              <p><span>Recording share</span><strong id="asIsRecordingShare">-</strong></p>
+            </article>
+          </div>
+
+          <div class="mini">
+            <div class="card">
+              <strong>Why this helps immediately</strong><br>
+              Live sessions remain on Google Meet. This model changes only recording distribution,
+              closing link-sharing leaks and recovering buyers who otherwise never become customers.
+            </div>
+            <div class="card">
+              <strong>Long-term growth play</strong><br>
+              Syllabus-based fragments, urgency packs (orals/project/finals), and recurring Q&A
+              create repeatable purchase behavior without requiring new live delivery infrastructure.
+            </div>
+          </div>
+        </div>
+
+        <div id="panelPlatform" class="tab-panel hidden">
+          <div class="results">
+            <p><span>Platform take rate</span><strong id="platformCutLine">-</strong></p>
+            <p><span>With Platform (recordings) May-Nov</span><strong id="platformCampaignRevenue">-</strong></p>
+            <p><span>Platform Plus May-Nov</span><strong id="platformPlusCampaignRevenue">-</strong></p>
+            <p><span>Avg monthly (recordings)</span><strong id="platformMonthlyRevenue">-</strong></p>
+            <p><span>Avg monthly (plus)</span><strong id="platformPlusMonthlyRevenue">-</strong></p>
+            <p><span>Daily average (recordings)</span><strong id="platformDailyRevenue">-</strong></p>
+            <p><span>Daily average (plus)</span><strong id="platformPlusDailyRevenue">-</strong></p>
           </div>
         </div>
       </article>
@@ -328,9 +488,10 @@
 
   <script>
     const ids = [
-      "cohort", "activeBuyers", "augustPeakBoost", "pricePerRecording", "platformCut", "leakageRate", "recoveryRate",
+      "cohort", "activeBuyers", "midSeasonMultiplier", "peakSeasonMultiplier", "augustPeakBoost",
+      "novemberBuyerCap", "pricePerRecording", "platformCut", "leakageRate", "recoveryRate",
       "weekdaySessions", "weekendSessionsPerDay", "fragmentAdoption", "fragmentParts",
-      "fragmentPartPrice", "urgencyAdoption", "urgencyPrice", "urgencyItemsWeekly",
+      "fragmentPartPrice",
       "manualHoursDaily", "automationEfficiency"
     ];
 
@@ -354,135 +515,144 @@
       const cohort = +$("cohort").value;
       $("activeBuyers").max = cohort;
       if (+$("activeBuyers").value > cohort) $("activeBuyers").value = cohort;
+      $("novemberBuyerCap").max = cohort;
+      if (+$("novemberBuyerCap").value > cohort) $("novemberBuyerCap").value = cohort;
 
-      const active = +$("activeBuyers").value;
+      const mayBuyers = +$("activeBuyers").value;
+      const midSeasonMultiplier = +$("midSeasonMultiplier").value;
+      const peakSeasonMultiplier = +$("peakSeasonMultiplier").value;
       const augustPeakBoost = clampPct(+$("augustPeakBoost").value);
+      const novemberBuyerCap = +$("novemberBuyerCap").value;
       const price = +$("pricePerRecording").value;
       const platformCut = clampPct(+$("platformCut").value);
-      const leakageRate = clampPct(+$("leakageRate").value);
-      const recoveryRate = clampPct(+$("recoveryRate").value);
-      const weekdaySessions = +$("weekdaySessions").value;
-      const weekendSessionsPerDay = +$("weekendSessionsPerDay").value;
-      const fragmentAdoption = clampPct(+$("fragmentAdoption").value);
-      const fragmentParts = +$("fragmentParts").value;
-      const fragmentPartPrice = +$("fragmentPartPrice").value;
-      const urgencyAdoption = clampPct(+$("urgencyAdoption").value);
-      const urgencyPrice = +$("urgencyPrice").value;
-      const urgencyItemsWeekly = +$("urgencyItemsWeekly").value;
+      const recordingShare = clampPct(+$("leakageRate").value);
+      const recoveredAudienceRate = clampPct(+$("recoveryRate").value);
+      const wouldHavePaidPerRecordingBuyer = +$("weekdaySessions").value;
+      const recordingPriceUplift = clampPct(+$("weekendSessionsPerDay").value);
+      const repeatabilityUplift = clampPct(+$("fragmentAdoption").value);
+      const premiumAddonPerUnitDay = +$("fragmentParts").value;
+      const plusRecordingShare = clampPct(+$("fragmentPartPrice").value);
+      const mayWeeks = 8;
+      const midWeeks = 12;
+      const peakWeeks = 10;
       const manualHoursDaily = +$("manualHoursDaily").value;
       const automationEfficiency = clampPct(+$("automationEfficiency").value);
 
-      const weeklySessions = (weekdaySessions * 5) + (weekendSessionsPerDay * 2);
-      const sessionsPerDay = weeklySessions / 7;
+      const unitDaysPerWeek = 9; // 5 single-unit days + 2 double-unit days
+      const totalWeeks = mayWeeks + midWeeks + peakWeeks;
+      const safeTotalWeeks = totalWeeks > 0 ? totalWeeks : 1;
+      const campaignDays = safeTotalWeeks * 7;
 
-      const fragmentPerSessionIncrement = fragmentParts > 0 ? Math.max((fragmentParts * fragmentPartPrice) - price, 0) : 0;
+      const mayPool = Math.min(mayBuyers, cohort);
+      const midPool = Math.min(mayBuyers * midSeasonMultiplier, cohort);
+      const octPool = Math.min(mayBuyers * peakSeasonMultiplier, cohort);
+      const novPoolRaw = mayBuyers * peakSeasonMultiplier * (1 + augustPeakBoost);
+      const novPool = Math.min(novPoolRaw, novemberBuyerCap, cohort);
 
-      function calcSnapshot(activeStudents) {
-        const boundedActive = Math.max(0, Math.min(activeStudents, cohort));
-        const dailyGrossPotential = boundedActive * price * sessionsPerDay;
-        const dailyLeakage = dailyGrossPotential * leakageRate;
-        const currentDailyNet = dailyGrossPotential - dailyLeakage;
-        const protectedCoreDaily = dailyGrossPotential - (dailyLeakage * (1 - recoveryRate));
-        const dailyFragmentUplift = boundedActive * fragmentAdoption * fragmentPerSessionIncrement * sessionsPerDay;
-        const dailyUrgencyUplift = boundedActive * urgencyAdoption * urgencyPrice * (urgencyItemsWeekly / 7);
-        const dailyBeforeCut = protectedCoreDaily + dailyFragmentUplift + dailyUrgencyUplift;
-        const dailyTutorNet = dailyBeforeCut * (1 - platformCut);
-        return {
-          boundedActive,
-          dailyGrossPotential,
-          currentDailyNet,
-          protectedCoreDaily,
-          dailyFragmentUplift,
-          dailyUrgencyUplift,
-          dailyTutorNet
-        };
+      const peakHalfWeeks = peakWeeks / 2;
+      const weightedPoolSum =
+        (mayPool * mayWeeks) +
+        (midPool * midWeeks) +
+        (octPool * peakHalfWeeks) +
+        (novPool * peakHalfWeeks);
+
+      const avgPoolPerUnitDay = weightedPoolSum / safeTotalWeeks;
+      const asIsWeeklyGmv = avgPoolPerUnitDay * price * unitDaysPerWeek;
+      const asIsMayNovNet = asIsWeeklyGmv * safeTotalWeeks;
+
+      const avgRecordingBuyersAsIs = avgPoolPerUnitDay * recordingShare;
+      const avgLiveBuyers = avgPoolPerUnitDay - avgRecordingBuyersAsIs;
+      const destroyedTransactions = avgRecordingBuyersAsIs * wouldHavePaidPerRecordingBuyer;
+      const recoveredTransactions = destroyedTransactions * recoveredAudienceRate;
+
+      const withPlatformRecording = avgRecordingBuyersAsIs + recoveredTransactions;
+      const withPlatformTotalBuyers = Math.min(avgLiveBuyers + withPlatformRecording, cohort);
+      const withPlatformWeeklyGmv = withPlatformTotalBuyers * price * unitDaysPerWeek;
+      const withPlatformTutorNet = withPlatformWeeklyGmv * safeTotalWeeks * (1 - platformCut);
+      const withPlatformPlatformRev = withPlatformWeeklyGmv * safeTotalWeeks * platformCut;
+
+      const plusRecordingBase = withPlatformTotalBuyers * plusRecordingShare;
+      const plusLiveBase = Math.max(withPlatformTotalBuyers - plusRecordingBase, 0);
+      const plusRecordingDemand = plusRecordingBase * (1 + repeatabilityUplift);
+      let plusTotalBuyers = plusLiveBase + plusRecordingDemand;
+      if (plusTotalBuyers > cohort) {
+        const overflow = plusTotalBuyers - cohort;
+        plusTotalBuyers = cohort;
+        // Cap overflow by trimming recording side first.
+        const adjustedRecording = Math.max(plusRecordingDemand - overflow, 0);
+        const adjustedLive = Math.max(plusTotalBuyers - adjustedRecording, 0);
+        const recordingPricePlus = price * (1 + recordingPriceUplift);
+        const plusWeeklyGmvCapped = ((adjustedLive * price) + (adjustedRecording * recordingPricePlus) + premiumAddonPerUnitDay) * unitDaysPerWeek;
+        var plusWeeklyGmv = plusWeeklyGmvCapped;
+      } else {
+        const recordingPricePlus = price * (1 + recordingPriceUplift);
+        var plusWeeklyGmv = ((plusLiveBase * price) + (plusRecordingDemand * recordingPricePlus) + premiumAddonPerUnitDay) * unitDaysPerWeek;
       }
+      const plusTutorNet = plusWeeklyGmv * safeTotalWeeks * (1 - platformCut);
+      const plusPlatformRev = plusWeeklyGmv * safeTotalWeeks * platformCut;
 
-      const base = calcSnapshot(active);
-      const dailyGrossPotential = base.dailyGrossPotential;
-      const currentDailyNet = base.currentDailyNet;
-      const protectedCoreDaily = base.protectedCoreDaily;
-      const dailyFragmentUplift = base.dailyFragmentUplift;
-      const dailyUrgencyUplift = base.dailyUrgencyUplift;
-      const dailyTutorNet = base.dailyTutorNet;
-
-      const dailyUplift = dailyTutorNet - currentDailyNet;
-      const monthlyTutorNet = dailyTutorNet * 30;
-      const monthlyUplift = dailyUplift * 30;
-      const monthlyLeakageRecovered = (protectedCoreDaily - currentDailyNet) * 30 * (1 - platformCut);
-      const monthlyFragmentUplift = dailyFragmentUplift * 30 * (1 - platformCut);
-      const monthlyUrgencyUplift = dailyUrgencyUplift * 30 * (1 - platformCut);
       const monthlyHoursSaved = manualHoursDaily * automationEfficiency * 30;
-      const currentRetention = dailyGrossPotential > 0 ? (currentDailyNet / dailyGrossPotential) : 0;
-      const projectedRetention = dailyGrossPotential > 0 ? (dailyTutorNet / dailyGrossPotential) : 0;
-      const retentionGain = projectedRetention - currentRetention;
+      const tutorGainVsAsIs = withPlatformTutorNet - asIsMayNovNet;
+      const plusGainVsAsIs = plusTutorNet - asIsMayNovNet;
 
-      // May-Nov demand seasonality with a November exam peak.
-      const seasonalProfile = [
-        { name: "May", days: 31, factor: 0.70 },
-        { name: "Jun", days: 30, factor: 0.76 },
-        { name: "Jul", days: 31, factor: 0.84 },
-        { name: "Aug", days: 31, factor: 0.92 },
-        { name: "Sep", days: 30, factor: 1.00 },
-        { name: "Oct", days: 31, factor: 1.08 },
-        { name: "Nov", days: 30, factor: 1 + augustPeakBoost }
-      ];
+      const withPlatformDailyNet = withPlatformTutorNet / campaignDays;
+      const withPlatformMonthlyNet = withPlatformTutorNet / (safeTotalWeeks / 4.345);
+      const novBuyersEstimated = novPool;
 
-      let campaignTutorNet = 0;
-      let campaignCurrentNet = 0;
-      seasonalProfile.forEach((m) => {
-        const monthActive = active * m.factor;
-        const snap = calcSnapshot(monthActive);
-        campaignTutorNet += snap.dailyTutorNet * m.days;
-        campaignCurrentNet += snap.currentDailyNet * m.days;
-      });
-      const annualTutorNet = campaignTutorNet;
-      const annualUplift = campaignTutorNet - campaignCurrentNet;
-      const augustBuyers = Math.max(0, Math.min(Math.round(active * (1 + augustPeakBoost)), cohort));
-
-      $("kpiDaily").textContent = money(dailyTutorNet);
-      $("kpiMonthly").textContent = money(monthlyTutorNet);
-      $("kpiAnnual").textContent = money(annualTutorNet);
-      $("kpiLeakageStopped").textContent = money(monthlyLeakageRecovered);
-      $("kpiRetentionGain").textContent = pct(retentionGain);
-      $("kpiAugustBuyers").textContent = number(augustBuyers);
+      $("kpiAsIs").textContent = money(asIsMayNovNet);
+      $("kpiWithPlatform").textContent = money(withPlatformTutorNet);
+      $("kpiPlus").textContent = money(plusTutorNet);
+      $("kpiGain").textContent = money(plusGainVsAsIs);
+      $("kpiRecoveredBuyers").textContent = number(recoveredTransactions);
+      $("kpiNovBuyers").textContent = number(novBuyersEstimated);
       $("kpiHoursSaved").textContent = number(monthlyHoursSaved);
-      $("kpiUplift").textContent = money(monthlyUplift);
+      $("kpiPlatformRev").textContent = money(withPlatformPlatformRev);
 
-      $("currentDaily").textContent = money(currentDailyNet);
-      $("withPlatformDaily").textContent = money(dailyTutorNet);
-      $("currentRetention").textContent = pct(currentRetention);
-      $("projectedRetention").textContent = pct(projectedRetention);
-      $("augustBuyersLine").textContent = number(augustBuyers);
-      $("dailyUplift").textContent = money(dailyUplift);
-      $("monthlyUplift").textContent = money(monthlyUplift);
-      $("annualUplift").textContent = money(annualUplift);
-      $("leakageRecoveredMonthly").textContent = money(monthlyLeakageRecovered);
-      $("fragmentUpliftMonthly").textContent = money(monthlyFragmentUplift);
-      $("urgencyUpliftMonthly").textContent = money(monthlyUrgencyUplift);
-      $("hoursSavedMonthly").textContent = `${number(monthlyHoursSaved)} hrs`;
+      $("asIsNet").textContent = money(asIsMayNovNet);
+      $("asIsDailyBuyers").textContent = number(avgPoolPerUnitDay);
+      $("asIsNovBuyers").textContent = number(novBuyersEstimated);
+      $("asIsRecordingShare").textContent = pct(recordingShare);
 
-      const upliftWord = monthlyUplift >= 0 ? "more" : "less";
-      $("pitchLine").textContent =
-        `Even with a ${Math.round(platformCut * 100)}% platform cut, this model projects ${money(Math.abs(monthlyUplift))} ${upliftWord} each month than the current leakage-prone setup.`;
+      $("platformTutorNet").textContent = money(withPlatformTutorNet);
+      $("platformDailyBuyers").textContent = number(withPlatformTotalBuyers);
+      $("platformRecoveredBuyers").textContent = number(recoveredTransactions);
+      $("platformGain").textContent = money(tutorGainVsAsIs);
+
+      $("plusTutorNet").textContent = money(plusTutorNet);
+      $("plusDailyBuyers").textContent = number(plusTotalBuyers);
+      $("plusRecordingPrice").textContent = money(price * (1 + recordingPriceUplift));
+      $("plusGain").textContent = money(plusGainVsAsIs);
+
+      $("assumptionPath").textContent = `${number(mayPool)} -> ${number(midPool)} -> ${number(octPool)} -> ${number(novPool)}`;
+      $("assumptionRecordingShare").textContent = pct(recordingShare);
+      $("assumptionDestroyedRate").textContent = number(wouldHavePaidPerRecordingBuyer);
+      $("assumptionRecoveredRate").textContent = pct(recoveredAudienceRate);
+
+      $("platformCutLine").textContent = pct(platformCut);
+      $("platformDailyRevenue").textContent = money(withPlatformPlatformRev / campaignDays);
+      $("platformMonthlyRevenue").textContent = money(withPlatformPlatformRev / (safeTotalWeeks / 4.345));
+      $("platformCampaignRevenue").textContent = money(withPlatformPlatformRev);
+      $("platformPlusDailyRevenue").textContent = money(plusPlatformRev / campaignDays);
+      $("platformPlusMonthlyRevenue").textContent = money(plusPlatformRev / (safeTotalWeeks / 4.345));
+      $("platformPlusCampaignRevenue").textContent = money(plusPlatformRev);
     }
 
     function bindControls() {
       syncDisplay("cohort");
       syncDisplay("activeBuyers");
+      syncDisplay("midSeasonMultiplier", "x");
+      syncDisplay("peakSeasonMultiplier", "x");
       syncDisplay("augustPeakBoost", "%");
+      syncDisplay("novemberBuyerCap");
       syncDisplay("pricePerRecording", " KES");
       syncDisplay("platformCut", "%");
       syncDisplay("leakageRate", "%");
       syncDisplay("recoveryRate", "%");
       syncDisplay("weekdaySessions");
-      syncDisplay("weekendSessionsPerDay");
+      syncDisplay("weekendSessionsPerDay", "%");
       syncDisplay("fragmentAdoption", "%");
-      syncDisplay("fragmentParts");
-      syncDisplay("fragmentPartPrice", " KES");
-      syncDisplay("urgencyAdoption", "%");
-      syncDisplay("urgencyPrice", " KES");
-      syncDisplay("urgencyItemsWeekly");
+      syncDisplay("fragmentParts", " KES");
+      syncDisplay("fragmentPartPrice", "%");
       syncDisplay("manualHoursDaily", " hrs");
       syncDisplay("automationEfficiency", "%");
 
@@ -492,21 +662,42 @@
             $("activeBuyers").max = $("cohort").value;
           }
           const suffixMap = {
+            midSeasonMultiplier: "x",
+            peakSeasonMultiplier: "x",
             pricePerRecording: " KES",
             platformCut: "%",
             leakageRate: "%",
             recoveryRate: "%",
             augustPeakBoost: "%",
+            weekendSessionsPerDay: "%",
             fragmentAdoption: "%",
-            fragmentPartPrice: " KES",
-            urgencyAdoption: "%",
-            urgencyPrice: " KES",
+            fragmentParts: " KES",
+            fragmentPartPrice: "%",
             manualHoursDaily: " hrs",
             automationEfficiency: "%"
           };
           syncDisplay(id, suffixMap[id] || "");
           recompute();
         });
+      });
+
+      const tabClient = $("tabClient");
+      const tabPlatform = $("tabPlatform");
+      const panelClient = $("panelClient");
+      const panelPlatform = $("panelPlatform");
+
+      tabClient.addEventListener("click", () => {
+        tabClient.classList.add("active");
+        tabPlatform.classList.remove("active");
+        panelClient.classList.remove("hidden");
+        panelPlatform.classList.add("hidden");
+      });
+
+      tabPlatform.addEventListener("click", () => {
+        tabPlatform.classList.add("active");
+        tabClient.classList.remove("active");
+        panelPlatform.classList.remove("hidden");
+        panelClient.classList.add("hidden");
       });
     }
 
